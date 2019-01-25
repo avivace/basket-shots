@@ -1,6 +1,7 @@
 # LaTeX files
 *.aux
 *.toc
+*.out
 
 # OS generated files #
 .DS_Store
