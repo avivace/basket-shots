@@ -7,8 +7,9 @@ dataset = read.csv('shots_att_def_clean.csv', sep=",", fileEncoding="latin1")
 # Remove
 dataset = dataset[-c(1, 7, 9)]
 # Use *only* the first X entries
-dataset = head(dataset,1000)
-
+dataset = head(dataset, 2000)
+dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
+str(dataset)
 # Split dataset helper function
 split.data = function(data, p = 0.7, s = 1) {
   set.seed(s)
