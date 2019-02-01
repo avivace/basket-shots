@@ -4,12 +4,44 @@ library(rminer)
 
 # Import dataset
 dataset = read.csv('shots_att_def_clean.csv', sep=",", fileEncoding="latin1")
+
 # Remove
 dataset = dataset[-c(1, 7, 9)]
+
 # Use *only* the first X entries
-dataset = head(dataset, 2000)
+dataset = head(dataset, 20000)
 dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
+
+# Scale
+performScaling <- TRUE  # Turn it on/off for experimentation.
+
+if (performScaling) {
+  
+  # Loop over each column.
+  for (colName in names(dataset)) {
+    
+    # Check if the column contains numeric data.
+    if(class(dataset[,colName]) == 'integer' | class(dataset[,colName]) == 'numeric') {
+      
+      # Scale this column (scale() function applies z-scaling).
+      dataset[,colName] <- scale(dataset[,colName])
+    }
+  }
+}
+
+# One-hot encoding
+library(ade4)
+library(data.table)
+feats = c('LOCATION', 'attack_Pos', 'defend_Pos')
+
+for (f in feats){
+  dataset_dummy = acm.disjonctif(dataset[f])
+  dataset[f] = NULL
+  dataset = cbind(dataset, dataset_dummy)
+}
+
 str(dataset)
+
 # Split dataset helper function
 split.data = function(data, p = 0.7, s = 1) {
   set.seed(s)
