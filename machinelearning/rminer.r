@@ -3,14 +3,15 @@ setwd('~/github/basket-shots/datasets/')
 library(rminer)
 
 # Import dataset
-dataset = read.csv('shots_att_def_clean.csv', sep=",", fileEncoding="latin1")
+dataset = read.csv('shots_att_def_stats.csv', sep=",", fileEncoding="latin1")
 
 # Remove
-dataset = dataset[-c(1, 7, 9)]
+dataset = dataset[-c(1, 2)]
+str(dataset)
 
 # Use *only* the first X entries
 dataset = head(dataset, 20000)
-dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
+#dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
 
 # Scale
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -32,7 +33,7 @@ if (performScaling) {
 # One-hot encoding
 library(ade4)
 library(data.table)
-feats = c('LOCATION', 'attack_Pos', 'defend_Pos')
+feats = c('location', 'position_attack', 'position_defend')
 
 for (f in feats){
   dataset_dummy = acm.disjonctif(dataset[f])
@@ -56,7 +57,7 @@ trainset= allset$train
 testset= allset$test
 
 # Train model
-model=fit(SHOT_RESULT~.,trainset,model="svm", task="class")
+model=fit(shot_result~.,trainset,model="svm", task="class")
 # Print model parameters
 print(model@mpar)
 prediction = predict(model, testset)
