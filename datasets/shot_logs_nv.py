@@ -18,3 +18,4 @@ df_agg = df_agg.drop(columns=['SHOT_NUMBER', 'FGM', '% Previous'])
 df_final = df_agg.join(df_shift)
 df_final = pd.merge(df, df_final, on=['player_name', 'GAME_ID'], how='inner')
 df_final.to_csv(r"C:\Users\luca\Documents\GitHub\basket-shots\datasets\shot_logs_wpp.csv")
+
