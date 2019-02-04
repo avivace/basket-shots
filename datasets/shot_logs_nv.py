@@ -1,12 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Feb  1 19:31:32 2019
-
-@author: luca
-"""
 import pandas as pd
 
-data = pd.read_csv(r"C:\Users\luca\Documents\GitHub\basket-shots\datasets\shot_logs.csv")
+data = pd.read_csv(r"shot_logs.csv")
 df = data.sort_values(by=['player_name', 'GAME_ID'])
 df_agg = df.groupby(['player_name', 'GAME_ID']).agg({'SHOT_NUMBER':'max', 'FGM':'sum'}).reset_index()
 df_cs = df_agg.groupby('player_name').agg({'SHOT_NUMBER':'cumsum', 'FGM':'cumsum'})
@@ -17,5 +11,4 @@ df_shift = df_agg.groupby('player_name')['% Previous'].shift(1)
 df_agg = df_agg.drop(columns=['SHOT_NUMBER', 'FGM', '% Previous'])
 df_final = df_agg.join(df_shift)
 df_final = pd.merge(df, df_final, on=['player_name', 'GAME_ID'], how='inner')
-df_final.to_csv(r"C:\Users\luca\Documents\GitHub\basket-shots\datasets\shot_logs_wpp.csv")
-
+df_final.to_csv(r"shot_logs_wpp.csv")

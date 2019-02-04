@@ -11,7 +11,7 @@ Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati 
 		\caption{Campi più importanti del dataset \texttt{shot\_logs.csv}.\label{long}}\\
 
 		\hline
-		Attributo & Tipo di dato & Descrizione \\
+		\bfseries{Attributo} & \bfseries{Tipo di dato} & \bfseries{Descrizione} \\
 		\hline
 		Location & factor(home, away) & In casa o fuori casa \\
 		\hline
@@ -46,6 +46,11 @@ Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati 
 	\end{longtable}
 \end{center}
 
+\texttt{percentage\_previous\_game} è una nuova feature che abbiamo computato dai dati esistenti. Rappresenta la percentuale di successo al tiro fino a quel momento in stagione. Il suo valore è stato ottenuto il seguente script Python (datasets/shot\_logs\_nv.py) che, facendo uso della libreria \texttt{Pandas}, aggrega i dati delle partite precedenti a quella a cui si riferisce il tiro in questione.
+
+\inputminted[breaklines]{python}{../datasets/shot_logs_nv.py}
+
+Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \textit{TS}, ovvero la percentuale di successo al tiro riferito a tutta la sua carriera (\textit{True Shooting}), proveniente dall’altro dataset che abbiamo preso in considerazione, \texttt{Season\_stats.csv}.
 
 
 
