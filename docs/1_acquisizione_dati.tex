@@ -1,0 +1,51 @@
+\chapter{Acquisizione Dati}
+
+Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obiettivi principali, abbiamo scelto due dataset ospitati dalla piattaforma Kaggle.
+
+\section{Shot\_logs.csv}
+
+Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati da 281 giocatori NBA diversi nella stagione 2014-2015. La fonte originale di questi dati è l’API pubblica del sito dell’NBA.
+\begin{center}
+	\begin{longtable}[m]{|m{8em} m{7em} m{16em}|} 
+
+		\caption{Campi più importanti del dataset \texttt{shot\_logs.csv}.\label{long}}\\
+
+		\hline
+		Attributo & Tipo di dato & Descrizione \\
+		\hline
+		Location & factor(home, away) & In casa o fuori casa \\
+		\hline
+		W & factor(win, loss) & Partita vinta o persa dalla squadra del giocatore che ha fatto il tiro \\ 
+		\hline
+		Final margin & int & Scarto tra punteggi delle due squadre a fine partita \\ 
+		\hline
+		Shot number & int & Numero del tiro da inizio partita \\ 
+		\hline
+		Periodo & factor(1,2,3,4) & Periodo della partita, 4 nel basket \\ 
+		\hline
+		Game clock & Date/Time & Tempo della partita in cui si è effettuato il tiro \\ 
+		\hline
+		Shot Clock & Date/Time & Secondo in cui il tiro viene rilasciato dall’attaccante. L’intervallo va da 0 a 24, in quanto 24 è il tempo massimo a disposizione della squadra per effettuare un’azione \\ 
+		\hline
+		Dribbles & int & Numero di dribbling effettuati dall’attaccante prima del tiro \\ 
+		\hline
+		Touch Time & float & Tempo dal possesso palla in cui ha tirato il giocatore \\ 
+		\hline
+		Shot Dist & float & Distanza dal canestro al momento del tiro \\ 
+		\hline
+		PTS Type & factor(2,3) & Tipo di tiro effettuato (da 2 o da 3) \\ 
+		\hline
+		Shot Result & factor(made, missed) & L’obiettivo che vogliamo predire, ossia se il tiro sia andato a segno o meno \\ 
+		\hline
+		Closest Defender & String & Nome del difensore più vicino all’attaccante \\ 
+		\hline
+		Close Def Dist & int & Distanza tra il difensore più vicino e l’attaccante \\ 
+		\hline
+		Player name & String & Nome dell’attaccante \\ 
+		\hline
+	\end{longtable}
+\end{center}
+
+
+
+

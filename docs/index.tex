@@ -11,17 +11,23 @@
 \usepackage{setspace}
 \usepackage{amsthm}
 \usepackage[utf8]{inputenc}
+% Allows setting fixed width in tables columns
+\usepackage{array}
+% Allows breaking tables in multiple pages
+\usepackage{longtable}
 
 \usepackage[font=footnotesize, labelfont=bf]{caption}
 \captionsetup[table]{position=below}
 \captionsetup[figure]{position=below}
 
+% Chapter titles
 \graphicspath{ {images/} }
 \definecolor{gray90}{gray}{0.90}
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray90}{|}\hsp}{0pt}{\Huge\bfseries}
 \newcommand{\hsp}{\hspace{10pt}}
 
-
+% Redefine Table of Contents title
+\renewcommand{\contentsname}{Indice}
 
 \begin{document}
 
@@ -39,10 +45,12 @@
   Vivace Antonio\\
   \texttt{793509}
 }
-\date{Data Technology e Machine Learning \\ Febbraio 2019}
+\date{Data Technology e Machine Learning, \\ Febbraio 2019}
 \maketitle
 
 \tableofcontents
 
+\input{0_dominio_obbiettivo}
+\input{1_acquisizione_dati}
 
 \end{document}
