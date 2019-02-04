@@ -17,6 +17,13 @@
 \usepackage{longtable}
 % Syntax highlighted code blocks using Pygment
 \usepackage{minted}
+% Use custom fonts, used to redefine the monospaced font
+\usepackage{fontspec}
+
+\setmonofont{Iosevka}[Scale=0.85]
+
+% Code blocks labels
+\newenvironment{code}{\captionsetup{type=listing}}{}
 
 \usepackage[font=footnotesize, labelfont=bf]{caption}
 \captionsetup[table]{position=below}
@@ -54,5 +61,7 @@
 
 \input{0_dominio_obbiettivo}
 \input{1_acquisizione_dati}
+\input{2_preparazione_dati}
+\input{3_integrazione_dati}
 
 \end{document}
