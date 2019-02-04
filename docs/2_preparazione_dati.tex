@@ -1,0 +1,18 @@
+\chapter{Preparazione dati}
+
+Abbiamo fatto notare che nel file \texttt{shot\_logs.csv} i nomi degli attaccanti (attributo \texttt{player\_name}) e i nomi dei difensori (attributo \texttt{closest\_defender}) hanno un formato diverso. Per eseguire una corretta integrazione con l’altro dataset è necessario quindi uniformare questi valori, permettendone l’identificazione come stesso giocatore, sia esso l’attaccante o il difensore nel tiro in questione. 
+\par
+Non si tratta di deduplication perchè quest’ultima mira ad individuare istanze che si riferiscono ad uno stesso concetto all’interno dello stesso database, mentre qui non abbiamo istanze duplicate, ma valori diversi che in domini differenti si riferiscono alla stessa entità.
+\par
+Inizialmente avevamo optato per una funzione che separasse i nomi in \textit{token}, li ordinasse lessicograficamente e che li risolvesse rilevando un match per una totale distanza di edit minore di 3 o maggiore solo in caso di diminutivi (per esempio: \texttt{J.J. Barea} e \texttt{Barea Jose Juan}).
+
+Questa funzione è stata implementata in Python, nel file \texttt{datasets/match.py}.
+\par
+Il metodo funzionava correttamente, ma ci siamo poi accorti che due attributi del dataset (\texttt{player\_id} e \texttt{closest\_def\_id}) corrispondevano univocamente. Abbiamo quindi utilizzato la componente tMap in Talend per uniformare i nomi di attaccanti e difensori: usando tecniche di mapping abbiamo ricercato giocatori con lo stesso id e abbiamo sostituito il loro nome nella colonna \texttt{player\_name} (nome dell’attaccante) con quello della colonna \texttt{closest\_defender}.
+\par
+Il risultato di tale operazione ci ha permesso infatti una più agevole integrazione con l’altro dataset, poichè quest’ultimo non possiede un id univoco per i giocatori e il processo integrativo deve essere necessariamente effettuato facendo corrispondere i nomi degli atleti.
+Infine bisogna specificare che per ovviare all’assenza di 5577 occorrenze nel campo ‘shot\_clock’, abbiamo deciso di utilizzare la tecnica di risoluzione dei conflitti meet in the middle, prendendo il valore medio di ciascun giocatore per il suddetto campo.
+\par
+Per i nostri scopi, dal dataset \texttt{Seasons\_Stats.csv} otteniamo un sottoinsieme delle statistiche dei giocatori riferite all’anno 2015. Al suo interno è possibile trovare fino a 4 duplicati della coppia di attributi Year-Player, in quanto nella lega è permesso giocare in 4 differenti squadre ogni stagione. Ciò è stato risolto aggregando i valori degli attributi sopra citati, gestendo le statistiche numeriche (\texttt{BLK}, \texttt{TS}, \texttt{PER}) considerando la media stagionale e considerando invece l’occorrenza più recente per gli attributi \texttt{Pos} ed \texttt{Age}.
+\par
+Alcuni record che riguardavano giocatori di cui non abbiamo informazioni per la stagione interessata, sono stati rimossi. E.g. \textit{Atila Dos Santos} compare in alcune istanze del primo dataset ma lo stesso non è presente nel secondo dataset che descrive le caratteristiche dei giocatori.
