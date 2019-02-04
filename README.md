@@ -1,6 +1,9 @@
 # Basket Shots
 
-The documentation is built using `pdflatex -shell-escape index.tex`.
+
+### Documentation
+
+Build using `xelatex -shell-escape index.tex`.
 
 The Python 3 package `Pygment` is needed and `pygmentize` must available in the PATH.
 
