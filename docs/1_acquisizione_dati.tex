@@ -8,7 +8,7 @@ Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati 
 \begin{center}
 	\begin{longtable}[m]{|m{8em} m{7em} m{16em}|} 
 
-		\caption{Campi più importanti del dataset \texttt{shot\_logs.csv}.\label{long}}\\
+		\caption{Campi presi in considerazione del dataset \texttt{shot\_logs.csv}.\label{long}}\\
 
 		\hline
 		\bfseries{Attributo} & \bfseries{Tipo di dato} & \bfseries{Descrizione} \\
@@ -52,5 +52,41 @@ Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati 
 
 Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \textit{TS}, ovvero la percentuale di successo al tiro riferito a tutta la sua carriera (\textit{True Shooting}), proveniente dall’altro dataset che abbiamo preso in considerazione, \texttt{Season\_stats.csv}.
 
+\section{Season\_stats.csv}
 
+Questo dataset possiede le statistiche inerenti agli atleti e alle loro performance, dal 1950 al 2017. I dati sono originari del sito Basketball Reference, prelevati usando tecniche di \textit{web scraping}.
 
+\begin{center}
+	\begin{longtable}[m]{|m{5em} m{7em} m{16em}|} 
+
+		\caption{Campi presi in considerazione del dataset \texttt{Season\_stats.csv}.\label{long}}\\
+		\hline
+		\bfseries{Attributo} & \bfseries{Tipo di dato} & \bfseries{Descrizione} \\
+		\hline
+
+		Year & int & Anno di gioco\\ 
+		\hline
+		Player & String & Nome del giocatore\\ 
+		\hline
+		Pos & String & Ruolo nella squadra\\ 
+		\hline
+		Age & int & Età durante quella stagione\\ 
+		\hline
+		Games & int & Partite giocate in quella stagione\\ 
+		\hline
+		MP & int & Minuti totali giocati\\ 
+		\hline
+		PER & float & Player Efficiency Rating, indicatore tecnico per valutare la bravura di un giocatore \\ 
+		\hline
+		TS\% & float & True Shooting Percentage, un misuratore tecnico per valutare l’efficienza di tiro di un giocatore  \\ 
+		\hline
+		BLK\% & float & Block Percentage, la percentuale di blocchi effettuati \\ 
+		\hline
+
+	\end{longtable}
+\end{center}
+
+% TODO descrivere PER e TS\%
+% TODO forse questo va in Data Integration?
+
+È stata effettuata un’integrazione affinchè ogni tiro registrato in \texttt{shot\_logs.csv} avesse anche le statistiche e gli indicatori tecnici dell’attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
