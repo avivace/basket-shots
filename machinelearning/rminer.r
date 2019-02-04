@@ -1,10 +1,29 @@
 set.seed(123)
 setwd('~/github/basket-shots/datasets/')
 library(rminer)
+library(ggplot2)
 
 # Import dataset
 dataset = read.csv('shots_att_def_stats.csv', sep=",", fileEncoding="latin1")
 dataset = dataset[sample(1:nrow(dataset)),]
+
+# Removing outlier
+dataset = dataset[dataset$touch_time >= 0,]
+
+# Dataset exploration
+barplot(summary(dataset$shot_result))
+made = sum(dataset$shot_result == 'made')
+missed = sum(dataset$shot_result == 'missed')
+total = made+missed
+perc_made = round(made/total, 2)
+perc_missed = round(missed/total, 2)
+
+hist(dataset$shot_dist)
+hist(dataset$touch_time)
+
+ggplot(data=dataset, aes(x=shot_dist, y=close_def_distance)) + geom_point(aes(color=factor(shot_result))) 
+
+shots = dataset[, -c(1, 2)]
 # Remove
 dataset = dataset[-c(1, 2)]
 str(dataset)
@@ -58,7 +77,10 @@ trainset= allset$train
 testset= allset$test
 
 # Train model
-model=fit(shot_result~.,trainset,model="ksvm", task="class")
+model=fit(shot_result~.,trainset,model="svm", task="class")
+I = Importance(model, trainset, method="1D-SA")
+print(I$imp)
+print(round(I$imp,digits=2))
 # Print model parameters
 print(model@mpar)
 prediction = predict(model, testset)
