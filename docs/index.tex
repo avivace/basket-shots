@@ -10,7 +10,7 @@
 \usepackage{wrapfig}
 \usepackage{setspace}
 \usepackage{amsthm}
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
 % Allows setting fixed width in tables columns
 \usepackage{array}
 % Allows breaking tables in multiple pages
@@ -19,6 +19,8 @@
 \usepackage{minted}
 % Use custom fonts, used to redefine the monospaced font
 \usepackage{fontspec}
+% Colors
+\usepackage{xcolor}
 
 \setmonofont{Iosevka}[Scale=0.85]
 
@@ -59,9 +61,12 @@
 
 \tableofcontents
 
+\chapter{Introduzione}
 \input{0_dominio_obbiettivo}
+\chapter{Dati}
 \input{1_acquisizione_dati}
 \input{2_preparazione_dati}
 \input{3_integrazione_dati}
-
+\chapter{Machine Learning}
+\chapter{Conclusioni}
 \end{document}

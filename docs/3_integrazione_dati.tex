@@ -1,4 +1,4 @@
-\chapter{Integrazione dati}
+\section{Integrazione}
 
 L’analisi esplorativa dei due datasets, anche in vista dell’applicazione dei metodi di Machine Learning, ha prodotto come risultato due nuovi datasets composti da un insieme ridotto di attributi, ritenuti rilevanti e non ridondanti per lo studio e gli obiettivi prefissati. Il numero di record è rimasto inalterato.
 \par
@@ -9,5 +9,43 @@ Non utilizzando un id univoco che identifica un giocatore per effettuare l’int
 Effettuata l’integrazione, per verificare la consistenza del matching ad ogni passo è stato creato un file denominato \textit{rejected} in cui sono state inserite le istanze respinte, non trovando corrispondenza perfetta.
 \par
 Circa una decina di nomi sono risultati in questa lista. Questi casi sono stati risolti manualmente nello script \texttt{EditShotLogs\_0.1.java}, funzione matchNames, poichè sarebbe stato problematico e dispendioso usare funzioni di edit distance appositamente parametrizzate per così pochi e particolari nomi.
+\begin{code}
+\captionof{listing}{Metodo matchNames da dataintegration/EditShotLogs\_0.1.java}
+\begin{minted}{java}
+public static String matchNames(String name1) {
+	String[] def = {"Barea, Jose Juan", "Hardaway Jr., Tim", 
+		"Aminu, Al-Farouq", "Nene", "Mbah a Moute, Luc",
+		"Hayes, Charles", "Lucas III, John", "Taylor, Jeff",
+		"Rice Jr., Glen", "Datome, Gigi", "McAdoo, James Michael"};
+	String[] stats = {"J.J. Barea", "Tim Hardaway", 
+		"Al-Farouq Aminu", "Nene Hilario", "Luc Mbah",
+		"Chuck Hayes", "John Lucas", "Jeffery Taylor",
+		"Glen Rice", "Luigi Datome", "James Michael"};
+	String[] results = {"barea jj", "hardaway tim", 
+		"al-farouq aminu", "nene hilario", "luc mbah",
+		"chuck hayes", "john lucas", "jeffery taylor",
+		"glen rice", "datome luigi", "james mcadoo michael"};
+	if (Arrays.asList(def).contains(name1) || 
+		Arrays.asList(stats).contains(name1)) {
+		for (int i = 0; i < def.length; i++) {
+			if (name1.equals(def[i]) || 
+				name1.equals(stats[i])) {
+				return results[i];
+			}
+		}  
+	}
+	String[] names1 = name1.replaceAll("[^a-zA-Z ]", "")
+		.toLowerCase().split("\\s+");
+	Arrays.sort(names1);
+	String nuova = "";
+	for (int i = 0; i < names1.length; i++) {
+		nuova += names1[i];
+		nuova += " ";
+	}
+	nuova = nuova.trim();
+	return nuova;
+}
+\end{minted}
+\end{code}
 
 % todo aggiungere esempi di mismatch così si capisce che non aveva senso fare la funzione
