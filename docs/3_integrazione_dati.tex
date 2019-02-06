@@ -8,9 +8,10 @@ Non utilizzando un id univoco che identifica un giocatore per effettuare l’int
 \par
 Effettuata l’integrazione, per verificare la consistenza del matching ad ogni passo è stato creato un file denominato \textit{rejected} in cui sono state inserite le istanze respinte, non trovando corrispondenza perfetta.
 \par
-Circa una decina di nomi sono risultati in questa lista. Questi casi sono stati risolti manualmente nello script \texttt{EditShotLogs\_0.1.java}, funzione matchNames, poichè sarebbe stato problematico e dispendioso usare funzioni di edit distance appositamente parametrizzate per così pochi e particolari nomi.
+Circa una decina di nomi sono risultati in questa lista. Questi casi sono stati risolti manualmente nella routine \texttt{EditShotLogs\_0.1.java}, eseguita in pipeline da Talend, poichè sarebbe stato problematico e dispendioso usare funzioni di edit distance appositamente parametrizzate per così pochi e particolari casi
+
 \begin{code}
-\captionof{listing}{Metodo matchNames da dataintegration/EditShotLogs\_0.1.java}
+\captionof{listing}{Metodo matchNames da EditShotLogs\_0.1.java}
 \begin{minted}{java}
 public static String matchNames(String name1) {
 	String[] def = {"Barea, Jose Juan", "Hardaway Jr., Tim", 
