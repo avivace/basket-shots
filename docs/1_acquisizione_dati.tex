@@ -116,7 +116,7 @@ Una possibile soluzione a questo problema è ricavare valori approssimativi per 
 \subsection{Misure di qualità dei dataset}
 
 % 2 dimensioni di qualità dei dataset singoli
-\subsection{Season\_Stats.csv}
+\paragraph{Season\_Stats.csv}
 In \texttt{Season\_Stats.csv} vengono definiti 53 attributi per ogni giocatore. Alcuni di questi tuttavia rappresentano delle criticità che sporcano il dataset, abbassandone la qualità sia a livello di schema sia a livello di istanze.
 \par
 Innanzitutto riscontriamo una mancata correttezza rispetto al modello: gli attributi \texttt{blanl} e \texttt{blank2} sono indubbiamente campi inutili: nessuna istanza ha valori definiti per queste due colonne. Sono probabilmente refusi della fase di scraping dei dati e vanno eliminati perchè non esistenti nel modello ER e perchè intaccano la minimality del dataset.
@@ -137,7 +137,7 @@ Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, m
 
 Infine la chiave principale per le istanze è un id incrementale che va da 0 a 24692. Si tratta di una chiave non molto utile per il tipo di dataset: le performance dei giocatori andrebbero indicizzati con un id univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
 
-\subsection{shot\_logs.csv}
+\paragraph{shot\_logs.csv}
 
 \texttt{shot\_logs.csv}, presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza dello 4,35\%: per 5577 istanze su 128069 il suo valore non è specificato.
 Infine i valori delle colonne \texttt{player\_name} e \texttt{closest\_def} mancano di correttezza: giocatori con lo stesso id (quindi corrispondenti allo stesso giocatore) sono rappresentati con formati e capitalizzazioni diverse: \texttt{player\_name} infatti il segue il formato \texttt{Cognome, Nome} con le iniziali maiuscole, mentre in \texttt{closest\_def} il formato è \texttt{nome cognome} tutto in minuscolo.
