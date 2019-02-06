@@ -19,7 +19,7 @@ Datasets are hosted using Git LFS. Before cloning this repository, be sure to ha
 
 #### Requirements
 
-A lot of additional packages are used. On Debian systems: `sudo apt install texlive-full`.
+A lot of additional TeX packages are used. On Debian systems: `sudo apt install texlive-full`.
 
 The Python 3 package `Pygment` is needed and `pygmentize` must available in the PATH.
 
