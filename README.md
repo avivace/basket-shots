@@ -10,8 +10,11 @@ Data Technology and Machine Learning (CS MSc) exam final project. Academic year 
 
 [Slides]()
 
-<br><br>
+<br>
 
+--- 
+
+<br>
 
 Datasets are hosted using Git LFS. Before cloning this repository, be sure to have it installed.
 
