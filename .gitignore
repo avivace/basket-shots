@@ -3,6 +3,9 @@
 *.toc
 *.out
 _minted-index/
+*.bbl
+*.blg
+svg-inkscape/
 
 # OS generated files #
 .DS_Store
