@@ -1,0 +1,9 @@
+\section{Analisi esplorativa}
+
+Il passo di data integration che abbiamo svolto è stato effettuato in modo da preparare un dataset che non necessitasse di ulteriori modifiche dal punto di vista degli attributi, in grado di poter creare fin da subito un modello da sottoporre agli algoritmi di Machine Learning. Sono stati eliminati solamente gli attributi relativi ai nomi degli attaccanti e dei difensori, utilizzati solamente per il matching durante l’integrazione a causa dell’assenza di un id univoco.
+
+\par
+Infatti, è stata fatta sin dal principio un’analisi degli attributi in questa direzione. Il dataset integrato risultante possiede per ciascuno dei 128 000 tiri informazioni relative al tiro stesso, prese dal dataset shot_logs.csv, oltre ad informazioni supplementari relative sia agli attaccanti che ai difensori, prese dal dataset Season_Stats.csv. Non sono stati inclusi alcuni attributi da entrambi i dataset. Nel shot_logs.csv erano presenti alcuni attributi riguardanti la partita come lo scarto finale tra le squadre e la data della partita, che sono stati esclusi perché ritenuti non incidenti per le sorti di un tiro a canestro. Nel Seasons_Stats.csv, per lo stesso motivo, sono stati esclusi decine di indici statistici non determinanti, oltre ad informazioni come il numero di partite e minuti giocati in totale in stagione.
+
+\par
+Sono assenti, invece, alcune informazioni più approfondite inerenti alla partita, come ad esempio la precisa posizione di attaccante e difensore sul rettangolo di gioco piuttosto che l’effettiva distanza tra essi oppure la stabilità dell’attaccante durante il tiro (o durante la difesa nel caso del difensore). Queste e altre dinamiche di gioco potrebbero essere utili per creare modelli più approfonditi, che riescano a dare risultati meno superficiali.

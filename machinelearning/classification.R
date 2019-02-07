@@ -14,10 +14,10 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 2000)
+dataset = head(dataset, 25000)
 #dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
 
-# Scaling dataset
+# Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
 
 if (performScaling) {
@@ -63,11 +63,19 @@ testset= allset$test
 
 # Train model
 model=fit(shot_result~.,trainset,model="svm", task="prob")
-I = Importance(model, trainset, method="1D-SA")
 # Importance
-print(round(I$imp,digits=2))
+I = Importance(model, trainset, method="1D-SA")
+
+i = 1
+for (colName in names(dataset)) {
+  message(colName, round(I$imp[i],digits=2))
+  i = i + 1
+  # Check if the column contains numeric data.
+}
+
 # Print model parameters
 print(model@mpar)
+print(model@time)
 prediction = predict(model, testset)
 accuracy=mmetric(testset$shot_result,prediction,metric=c("ACC", "TPR"))
 print(accuracy)
@@ -79,6 +87,11 @@ txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_resul
 mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
 
 # Cross validation
-valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, task="class", model="ksvm")
-m=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ACC"))
+valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, task="prob", model="svm")
+accuracy=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ACC"))
+print(accuracy)
+m=mmetric(dataset$shot_result,prediction,metric=c("AUC"))
 print(m)
+txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=2),2))
+mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
+

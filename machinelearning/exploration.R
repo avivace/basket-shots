@@ -2,9 +2,11 @@ set.seed(123)
 setwd('~/github/basket-shots/datasets/')
 library(rminer)
 library(ggplot2)
+library(svglite)
 
 # Import dataset
 dataset = read.csv('shots_att_def_stats.csv', sep=",", fileEncoding="latin1")
+setwd('~/github/basket-shots/docs/')
 
 # Dataset exploration
 made = sum(dataset$shot_result == 'made')
@@ -40,11 +42,13 @@ data$Type = factor(data$Type, labels = c("C", "PG", "PF", "SF", "SG"))
 perc_made_c = round(made_c/(made_c + missed_c), 2)
 perc_missed_c = round(missed_c/(made_c + missed_c), 2)
 
-ggplot(data = data, aes(x = Type, y = Shot, fill = Group)) + 
+plot_made_missed = ggplot(data = data, aes(x = Type, y = Shot, fill = Group)) + 
   geom_bar(stat = "identity") +
   geom_text(aes(label = Shot), position = position_stack(vjust = 0.5))
   #opts(legend.position = "none")
 
+
+ggsave(file="made_missed_barplot.svg", plot=image, width=10)
 perc_made_c = round(made_c/(made_c + missed_c), 2)
 perc_missed_c = round(missed_c/(made_c + missed_c), 2)
 
@@ -59,4 +63,4 @@ barplot(summary(dataset$position_defend))
 hist(dataset$shot_dist)
 hist(dataset$touch_time)
 
-ggplot(data=dataset, aes(x=shot_dist, y=close_def_distance)) + geom_point(aes(color=factor(shot_result))) 
+ggplot(data=dataset, aes(x=shot_dist, y=close_def_distance)) + geom_point(aes(color=shot_result)) 

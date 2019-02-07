@@ -1,0 +1,10 @@
+\section{Creazione del training set}
+
+Il primo passo effettivo, quindi, è stato il preprocessing dei dati. I valori null di ciascun attributo erano stati prontamente rimossi durante l’integrazione. è da verificare, invece, la presenza di valori inconsistenti nel dominio dell’attributo preso in considerazione.
+Ad esempio, per l’attributo touch_time sono stati trovati valori <= 0. Considerando che il dominio di touch_time è [0, 24], valori <= 0 non sono ammessi, e vengono quindi eliminati dal dataset i record con tale valore di touch_time. Non sono stati trovati altri attributi con valori anomali.
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{boat.jpg}
+  \caption{A boat.}
+  \label{fig:boat1}
+\end{figure}
