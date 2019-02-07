@@ -37,6 +37,5 @@ Build:
 
 ```bash
 cd docs/
-bibtex index
-xelatex -8bit -shell-escape index.tex
+./build.sh
 ```
