@@ -10,19 +10,6 @@ dataset = dataset[sample(1:nrow(dataset)),]
 # Removing outlier
 dataset = dataset[dataset$touch_time >= 0,]
 
-# Dataset exploration
-barplot(summary(dataset$shot_result))
-made = sum(dataset$shot_result == 'made')
-missed = sum(dataset$shot_result == 'missed')
-total = made+missed
-perc_made = round(made/total, 2)
-perc_missed = round(missed/total, 2)
-
-hist(dataset$shot_dist)
-hist(dataset$touch_time)
-
-ggplot(data=dataset, aes(x=shot_dist, y=close_def_distance)) + geom_point(aes(color=factor(shot_result))) 
-
 # Remove unuseful features
 dataset = dataset[-c(1, 2)]
 
