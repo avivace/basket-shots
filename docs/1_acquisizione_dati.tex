@@ -2,9 +2,10 @@
 
 Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obiettivi principali, abbiamo scelto due dataset ospitati dalla piattaforma Kaggle.
 
-\subsection{Shot\_logs.csv}
+\subsection{Shot logs}
 
-Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati da 281 giocatori NBA diversi nella stagione 2014-2015. La fonte originale di questi dati è l’API pubblica del sito dell’NBA.
+
+\texttt{Shot\_logs.csv} contiene 128 000 record riguardanti i tiri a canestro effettuati da 281 giocatori NBA diversi nella stagione 2014-2015. La fonte originale di questi dati è l’API pubblica del sito dell’NBA.
 \begin{center}
 	\begin{longtable}[m]{|m{8em} m{7em} m{16em}|} 
 
@@ -55,9 +56,9 @@ Questo dataset contiene 128 000 record riguardanti i tiri a canestro effettuati 
 
 Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \textit{TS}, ovvero la percentuale di successo al tiro riferito a tutta la sua carriera (\textit{True Shooting}), proveniente dall’altro dataset che abbiamo preso in considerazione, \texttt{Season\_stats.csv}.
 
-\subsection{Season\_stats.csv}
+\subsection{Season stats}
 
-Questo dataset contiene le statistiche inerenti agli atleti e alle loro performance, dal 1950 al 2017. I dati sono originari del sito Basketball Reference, prelevati usando tecniche di \textit{web scraping}.
+\texttt{Season\_stats.csv} contiene le statistiche inerenti agli atleti e alle loro performance, dal 1950 al 2017. I dati sono originari del sito Basketball Reference, prelevati usando tecniche di \textit{web scraping}.
 
 \begin{center}
 	\begin{longtable}[m]{|m{5em} m{7em} m{16em}|} 
@@ -116,8 +117,9 @@ Una possibile soluzione a questo problema è ricavare valori approssimativi per 
 \subsection{Misure di qualità dei dataset}
 
 % 2 dimensioni di qualità dei dataset singoli
-\paragraph{Season\_Stats.csv}
-In \texttt{Season\_Stats.csv} vengono definiti 53 attributi per ogni giocatore. Alcuni di questi tuttavia rappresentano delle criticità che sporcano il dataset, abbassandone la qualità sia a livello di schema sia a livello di istanze.
+\subsubsection{Season stats}
+
+Vengono definiti 53 attributi per ogni giocatore. Alcuni di questi tuttavia rappresentano delle criticità che sporcano il dataset, abbassandone la qualità sia a livello di schema sia a livello di istanze.
 \par
 Innanzitutto riscontriamo una mancata correttezza rispetto al modello: gli attributi \texttt{blanl} e \texttt{blank2} sono indubbiamente campi inutili: nessuna istanza ha valori definiti per queste due colonne. Sono probabilmente refusi della fase di scraping dei dati e vanno eliminati perchè non esistenti nel modello ER e perchè intaccano la minimality del dataset.
 \par
@@ -137,9 +139,9 @@ Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, m
 
 Infine la chiave principale per le istanze è un id incrementale che va da 0 a 24692. Si tratta di una chiave non molto utile per il tipo di dataset: le performance dei giocatori andrebbero indicizzati con un id univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
 
-\paragraph{shot\_logs.csv}
+\subsubsection{Shot logs}
 
-\texttt{shot\_logs.csv}, presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza dello 4,35\%: per 5577 istanze su 128069 il suo valore non è specificato.
+Questo dataset presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza dello 4,35\%: per 5577 istanze su 128069 il suo valore non è specificato.
 Infine i valori delle colonne \texttt{player\_name} e \texttt{closest\_def} mancano di correttezza: giocatori con lo stesso id (quindi corrispondenti allo stesso giocatore) sono rappresentati con formati e capitalizzazioni diverse: \texttt{player\_name} infatti il segue il formato \texttt{Cognome, Nome} con le iniziali maiuscole, mentre in \texttt{closest\_def} il formato è \texttt{nome cognome} tutto in minuscolo.
 \par
 Questo problema caratterizza il 100\% delle istanze.

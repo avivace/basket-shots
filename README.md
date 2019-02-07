@@ -27,7 +27,7 @@ A lot of additional TeX packages are used. On Debian systems: `sudo apt install 
 The Python 3 package `Pygment` is needed and `pygmentize` must available in the PATH.
 
 ```
-pip3 install pygment
+pip3 install Pygments
 # Check if it's available
 pygmentize -V
 ```
@@ -35,5 +35,6 @@ pygmentize -V
 Build:
 
 ```bash
-xelatex -8bit -shell-escape docs/index.tex
+cd docs/
+xelatex -8bit -shell-escape index.tex
 ```
