@@ -74,7 +74,7 @@ importance = round(I$imp, digits=2)
 imp_feats = data.frame(features, importance)
 imp_feats = imp_feats[with(imp_feats, order(-importance, features)), ]
 importance_f = ggplot(imp_feats, aes(x=features, y=importance)) +
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity') + theme(text = element_text(size=15)) +
   coord_flip() #+ scale_x_discrete(limits = features)
 
 ggsave(file="importance.pdf", plot=importance_f, width=10)
