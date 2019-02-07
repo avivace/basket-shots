@@ -5,6 +5,8 @@ library(ggplot2)
 
 # Import dataset
 dataset = read.csv('shots_att_def_stats.csv', sep=",", fileEncoding="latin1")
+setwd('~/github/basket-shots/docs/')
+
 dataset = dataset[sample(1:nrow(dataset)),]
 
 # Removing outlier
@@ -14,7 +16,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 25000)
+dataset = head(dataset, 2000)
 #dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
 
 # Scaling dataset 
@@ -65,7 +67,17 @@ testset= allset$test
 model=fit(shot_result~.,trainset,model="svm", task="prob")
 # Importance
 I = Importance(model, trainset, method="1D-SA")
+print(round(I$imp,digits=2))
+features = c(colnames(dataset))
+print(features)
+importance = round(I$imp, digits=2)
+imp_feats = data.frame(features, importance)
+imp_feats = imp_feats[with(imp_feats, order(-importance, features)), ]
+importance_f = ggplot(imp_feats, aes(x=features, y=importance)) +
+  geom_bar(stat='identity') +
+  coord_flip() #+ scale_x_discrete(limits = features)
 
+ggsave(file="importance.pdf", plot=importance_f, width=10)
 i = 1
 for (colName in names(dataset)) {
   message(colName, round(I$imp[i],digits=2))

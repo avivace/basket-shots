@@ -3,8 +3,8 @@
 Il primo passo effettivo, quindi, è stato il preprocessing dei dati. I valori null di ciascun attributo erano stati prontamente rimossi durante l’integrazione. è da verificare, invece, la presenza di valori inconsistenti nel dominio dell’attributo preso in considerazione.
 Ad esempio, per l’attributo touch_time sono stati trovati valori <= 0. Considerando che il dominio di touch_time è [0, 24], valori <= 0 non sono ammessi, e vengono quindi eliminati dal dataset i record con tale valore di touch_time. Non sono stati trovati altri attributi con valori anomali.
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{boat.jpg}
-  \caption{A boat.}
-  \label{fig:boat1}
-\end{figure}
+\par
+Successivamente è stata applicata una normalizzazione del dataset per gli attributi numerici. è un procedimento che viene applicato frequentemente perché gli attributi sono calcolati con unità di misura differenti. In questo modo si evita che un attributo abbia un peso maggiore di un altro. è stato utilizzato per ciascun attributo il metodo min-max \begin{equation*} x = \dfrac{(x - min(x)}{(max(x) - min(x))} \end{equation}, molto utilizzato in letteratura in alternativa a z-score \begin{equation*}x = \dfrac{(x - \mu)}{\sigma} \end{equation}, in quanto gli attributi sono limitati in un range. Con la formula min-max i valori di ciascun attributo vengono posti tra 0 e 1.
+
+\par
+Non essendo svm una tecnica che gestisce attributi categorici, è stata applicata una tecnica di one-hot encoding per gestirli. In questo modo vengono creati tanti nuovi attributi quante sono le categorie di ciascun attributo. Il nuovo attributo è 1 se l’attributo originale aveva quel determinato valore, 0 altrimenti.
