@@ -1,4 +1,5 @@
 # LaTeX files
+*.pyg
 *.aux
 *.toc
 *.out
