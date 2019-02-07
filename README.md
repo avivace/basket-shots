@@ -22,8 +22,9 @@ Datasets are hosted using Git LFS. Before cloning this repository, be sure to ha
 
 #### Requirements
 
-A lot of additional TeX packages are used. On Debian systems: `sudo apt install texlive-full`.
+A lot of additional TeX packages are used. Inkscape must be installed and available in the PATH.
 
+On Debian systems: `sudo apt install texlive-full inkscape`.
 The Python 3 package `Pygment` is needed and `pygmentize` must available in the PATH.
 
 ```
@@ -36,5 +37,5 @@ Build:
 
 ```bash
 cd docs/
-xelatex -8bit -shell-escape index.tex
+./build.sh
 ```

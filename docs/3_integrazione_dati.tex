@@ -52,3 +52,13 @@ public static String matchNames(String name1) {
 % todo aggiungere esempi di mismatch così si capisce che non aveva senso fare la funzione
 
 \subsection{Misure di qualità del dataset integrato}
+
+\subsubsection{Currency}
+Un aspetto importante dei dati coinvolti nel nostro processo di integrazione è il loro cambiamento nel tempo. I database a nostra disposizione contemplano solo l’anno di campionato 2014-2015 ma i produttori originali di tali dataset eseguono almeno un aggiornamento annuale, ossia ogni volta che finisce una stagione vengono rimpiazzati i vecchi dati con quelli più recenti.
+Possiamo quindi calcolare delle metriche oggettive per quanto concerne il fattore temporale.
+% FIXME
+La Currency, definita come la velocità degli aggiornamenti, è calcolabile con la seguente formula\cite{doi:10.1287/mnsc.44.4.462}
+Currency = Age + (DeliveryTime - InputTime)
+Poichè l’anno corrente è 2019, i dati hanno una Age di 4 anni. Supponendo poi che DeliveryTime coincida con l’InputTime, la nostra Currency corrisponde all’età dei dati.
+Le statistiche dell’NBA rimangono utilizzabili per l’anno successivo (vorremmo usare i valori del campionato passato per predire i canestri nel nuovo campionato) quindi la Volatilità dei dati è uguale ad 1 anno.
+
