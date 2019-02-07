@@ -6,6 +6,8 @@ _minted-index/
 *.bbl
 *.blg
 svg-inkscape/
+*.run.xml
+*.bcf
 
 # OS generated files #
 .DS_Store
