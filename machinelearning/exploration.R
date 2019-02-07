@@ -9,7 +9,8 @@ dataset = read.csv('shots_att_def_stats.csv', sep=",", fileEncoding="latin1")
 setwd('~/github/basket-shots/docs/')
 
 # Shot result - total and percentage
-shot_result_plot = ggplot(dataset, aes(x = shot_result)) + geom_bar()
+shot_result_plot = ggplot(dataset, aes(x = shot_result)) + geom_bar() +
+  theme(text = element_text(size=20))
 ggsave(file="shot_result.pdf", plot=shot_result_plot, width=10)
 
 made = sum(dataset$shot_result == 'made')
@@ -50,7 +51,7 @@ data$Position = factor(data$Position, labels = c("C", "PG", "PF", "SF", "SG"))
 data$Label = factor(data$Label, labels = c("Made", "Missed"))
 
 plot_made_missed = ggplot(data = data, aes(x = Position, y = Shots, fill = Label)) + 
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity") + theme(text = element_text(size=20)) +
   geom_text(aes(label = Shots), position = position_stack(vjust = 0.5))
 ggsave(file="made_missed_barplot.pdf", plot=plot_made_missed, width=10)
 
@@ -59,11 +60,11 @@ dist_c = aggregate(dataset, by=list(dataset$position_attack), FUN=mean)
 shot_dist_position = dist_c[c("Group.1", "shot_dist")]
 colnames(shot_dist_position)[colnames(shot_dist_position)=="Group.1"] = "position"
 shot_dist_with_position = ggplot(data = shot_dist_position, aes(x = position, y = shot_dist)) + 
-  geom_bar(stat = "identity")
+  geom_bar(stat = "identity") + theme(text = element_text(size=20))
 
 ggsave(file="shot_dist_with_position.pdf", plot=shot_dist_with_position, width=10)
 
 # Correlation between shot distance and distance from the most near defender
 plot_shot_distance = ggplot(data=dataset, aes(x=shot_dist, y=close_def_distance)) +
-  geom_point(aes(color=shot_result)) 
+  geom_point(aes(color=shot_result)) + theme(text = element_text(size=20))
 ggsave(file="plot_shot_dist_def.pdf", plot=plot_shot_distance, width=10)
