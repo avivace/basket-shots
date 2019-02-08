@@ -1,13 +1,21 @@
+\pagebreak
 \section{Analisi descrittiva del dataset integrato}
 
-Dato il tipo di informazione che desideriamo ottenere dal dataset integrato, abbiamo valutato una serie di statistiche che caratterizzano fortemente i dati, scrivendo un semplice script Python che manipolasse opportunamente il dataset. All'interno dello script, commentati, si trovano le statistiche.
+Dato il tipo di informazione che desideriamo ottenere dal dataset integrato, abbiamo valutato una serie di statistiche che caratterizzano fortemente i dati, ottenuti con lo script \texttt{count}.
 
-\begin{code}
-\captionof{listing}{datasets/shot\_logs\_nv.py}
-\inputminted[breaklines]{python}{../dataintegration/count.py}
-\end{code}
+\begin{table}[h!]
+\centering
+	\begin{tabular}{c c} 
+	 
+		Media di tiri in stagione& 455.72 \\
+		Media di blocchi& 271.31 \\
+		Media dei tiri con esito positivo& 206.05\\
+		Media dei tiri con esito negativo& 249.67\\
+		\end{tabular}
+		\caption{Statistiche del dataset integrato}
+\end{table}
 
-Inoltre abbiamo rappresentato graficamente la relazione tra numero di giocatori e tiri \texttt{made} mostrata nella \autoref{made_shots_hist} e \texttt{missed} mostrata nella \autoref{missed_shots_hist}:
+La relazione tra numbero di giocatori e tiri \textit{made} è mostrata nella \autoref{made_shots_hist}, mentre quella con i tiri \textit{missed} nella \autoref{missed_shots_hist}.
 
 \begin{figure}
 \caption{Frequenza di tiri con esito positivo}
