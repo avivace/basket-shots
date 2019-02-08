@@ -1,27 +1,22 @@
 \section{Analisi descrittiva del dataset integrato}
 
-Dato il tipo di informazione che desideriamo ottenere dal dataset integrato, abbiamo valutato una serie di statistiche che caratterizzano fortemente i dati, scrivendo un semplice script Python che manipolasse opportunamente il dataset.
+Dato il tipo di informazione che desideriamo ottenere dal dataset integrato, abbiamo valutato una serie di statistiche che caratterizzano fortemente i dati, scrivendo un semplice script Python che manipolasse opportunamente il dataset. All'interno dello script, commentati, si trovano le statistiche.
 
 \begin{code}
 \captionof{listing}{datasets/shot\_logs\_nv.py}
 \inputminted[breaklines]{python}{../dataintegration/count.py}
 \end{code}
 
-Media di tiri: ogni giocatore tira 455.72 volte in una stagione
-Media delle difese: ogni giocatore tenta di bloccare un tiro 271.31 volte
-Media dei canestri: ogni giocatore fa canestro 206.05 volte
-Media dei tiri errati: ogni giocatore tira sbagliando 249.67 volte
-
 Inoltre abbiamo rappresentato graficamente la relazione tra numero di giocatori e tiri \texttt{made} mostrata nella \autoref{made_shots_hist} e \texttt{missed} mostrata nella \autoref{missed_shots_hist}:
 
 \begin{figure}
-\caption{Numero di tiri con esito positivo}
+\caption{Frequenza di tiri con esito positivo}
 \label{made_shots_hist}
 \includegraphics[width=\linewidth]{made_shots_hist}
 \end{figure}
 
 \begin{figure}
-\caption{Numero di tiri con esito negativo}
+\caption{Frequenza di tiri con esito negativo}
 \label{missed_shots_hist}
 \includegraphics[width=\linewidth]{missed_shots_hist}
 \end{figure}

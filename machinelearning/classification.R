@@ -16,7 +16,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 1000)
+#dataset = head(dataset, 10000)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -63,7 +63,7 @@ trainset= allset$train
 testset= allset$test
 
 # Train model
-model=fit(shot_result~.,trainset,model="ksvm", task="prob", kernel="rbfdot")
+model=fit(shot_result~.,trainset,model="ksvm", task="prob", kernel="rbfdot", C=1)
 # Importance
 I = Importance(model, trainset, method="1D-SA")
 print(round(I$imp,digits=2))
@@ -82,10 +82,10 @@ ggsave(file="importance.pdf", plot=importance_f, width=10)
 print(model@mpar)
 print(model@time)
 prediction = predict(model, testset)
-accuracy=mmetric(testset$shot_result,prediction,metric=c("ALL"))
-print(accuracy)
-m=mmetric(testset$shot_result,prediction,metric=c("AUC"))
-print(m) # confusion matrix
+metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
+print(metrics)
+auc=mmetric(testset$shot_result,prediction,metric=c("AUC"))
+print(auc) # confusion matrix
 
 # ROC
 txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=2),2))
@@ -93,11 +93,11 @@ mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt
 
 # Cross validation
 valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
-                       task="prob", model="ksvm", kernel="rbfdot")
-accuracy=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ACC"))
-print(accuracy)
-m=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
-print(m)
+                       task="prob", model="ksvm", kernel="rbfdot", c=1)
+metrics=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ALL"))
+print(metrics)
+auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
+print(auc)
 txt=paste(levels(dataset$shot_result)[2],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=2),2))
-mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
+mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-svm")
 
