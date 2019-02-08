@@ -16,7 +16,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 2000)
+dataset = head(dataset, 20000)
 #dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
 
 # Scaling dataset 
@@ -64,7 +64,7 @@ trainset= allset$train
 testset= allset$test
 
 # Train model
-model=fit(shot_result~.,trainset,model="svm", task="prob")
+model=fit(shot_result~.,trainset,model="svm", task="prob", mpar=c(C=1, epsilon=1))
 # Importance
 I = Importance(model, trainset, method="1D-SA")
 print(round(I$imp,digits=2))
@@ -78,18 +78,12 @@ importance_f = ggplot(imp_feats, aes(x=features, y=importance)) +
   coord_flip() #+ scale_x_discrete(limits = features)
 
 ggsave(file="importance.pdf", plot=importance_f, width=10)
-i = 1
-for (colName in names(dataset)) {
-  message(colName, round(I$imp[i],digits=2))
-  i = i + 1
-  # Check if the column contains numeric data.
-}
 
 # Print model parameters
 print(model@mpar)
 print(model@time)
 prediction = predict(model, testset)
-accuracy=mmetric(testset$shot_result,prediction,metric=c("ACC", "TPR"))
+accuracy=mmetric(testset$shot_result,prediction,metric=c("ALL"))
 print(accuracy)
 m=mmetric(testset$shot_result,prediction,metric=c("AUC"))
 print(m) # confusion matrix

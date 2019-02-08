@@ -14,6 +14,8 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 		\hline
 		\bfseries{Attributo} & \bfseries{Tipo di dato} & \bfseries{Descrizione} \\
 		\hline
+		Matchup & String & Data dell'incontro e squadre partecipanti \\
+		\hline
 		Location & factor(home, away) & In casa o fuori casa \\
 		\hline
 		W & factor(win, loss) & Partita vinta o persa dalla squadra del giocatore che ha fatto il tiro \\ 
@@ -22,25 +24,25 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 		\hline
 		Shot number & int & Numero del tiro da inizio partita \\ 
 		\hline
-		Periodo & factor(1,2,3,4) & Periodo della partita, 4 nel basket \\ 
+		Period & factor(1,2,3,4,5,6,7) & Periodo della partita. Sono 4 periodi nel basket, più altri 3 supplementari in caso di pareggio tra le due squadre ai periodi 4, 5 e 6. \\ 
 		\hline
-		Game clock & Date/Time & Tempo della partita in cui si è effettuato il tiro \\ 
+		Game clock & Date/Time & Minuto e secondo della partita in cui si è effettuato il tiro \\ 
 		\hline
 		Shot Clock & Date/Time & Secondo in cui il tiro viene rilasciato dall’attaccante. L’intervallo va da 0 a 24, in quanto 24 è il tempo massimo a disposizione della squadra per effettuare un’azione \\ 
 		\hline
 		Dribbles & int & Numero di dribbling effettuati dall’attaccante prima del tiro \\ 
 		\hline
-		Touch Time & float & Tempo dal possesso palla in cui ha tirato il giocatore \\ 
+		Touch time & float & Secondo del possesso palla in cui il giocatore ha tirato \\ 
 		\hline
-		Shot Dist & float & Distanza dal canestro al momento del tiro \\ 
+		Shot dist & float & Distanza dal canestro al momento del tiro \\ 
 		\hline
-		PTS Type & factor(2,3) & Tipo di tiro effettuato (da 2 o da 3) \\ 
+		PTS type & factor(2,3) & Tipo di tiro effettuato (da 2 o da 3) \\ 
 		\hline
-		Shot Result & factor(made, missed) & L’obiettivo che vogliamo predire, esito del tiro (a segno o fallito) \\ 
+		Shot result & factor(made, missed) & Esito del tiro (a segno o fallito) \\ 
 		\hline
-		Closest Defender & String & Nome del difensore più vicino all’attaccante \\ 
+		Closest defender & String & Nome del difensore più vicino all’attaccante \\ 
 		\hline
-		Close Def Dist & int & Distanza tra il difensore più vicino e l’attaccante \\ 
+		Close def dist & int & Distanza tra il difensore più vicino e l’attaccante \\ 
 		\hline
 		Player name & String & Nome dell’attaccante \\ 
 		\hline
@@ -75,6 +77,8 @@ Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_prev
 		Pos & String & Ruolo nella squadra\\ 
 		\hline
 		Age & int & Età durante quella stagione\\ 
+		\hline
+		Tm & String & Nome abbreviato della squadra\\
 		\hline
 		Games & int & Partite giocate in quella stagione\\ 
 		\hline
