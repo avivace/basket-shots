@@ -11,9 +11,11 @@ completability = ggplot( data = dataset, aes( Date, Completeness )) +
   geom_ribbon(data = dataset[dataset$Date >= dataset$Date[500],], aes(ymin=50, ymax=Completeness), fill = "orange") +
   geom_ribbon(data = dataset[dataset$Date >= dataset$Date[500],], aes(ymin=0, ymax=50), fill = "lightgreen") +
   annotate("text", label = "A", x = dataset$Date[1100], y = 25, size = 8, colour = "black") +
-  annotate("text", label = "Cb", x = dataset$Date[1100], y = 75, size = 8, colour = "black")
+  annotate("text", label = "Cb", x = dataset$Date[1100], y = 75, size = 8, colour = "black") +
+  theme(text = element_text(size=20)) +
+  ylab("Completeness %")
 
-ggsave(file="completability.pdf", plot=completability, width=10, size=20)
+ggsave(file="completability.pdf", plot=completability, width=10)
 
 # geom_ribbon(aes(ymin=0, ymax=50), fill = "black")
   
