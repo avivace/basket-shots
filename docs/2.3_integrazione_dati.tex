@@ -80,7 +80,45 @@ $$\max\{{0, 1 - \frac{Currency}{Volatility}}\}$$
 
 Vale quindi 0, rappresentando una cattiva tempestività del nostro dataset.
 
+% dare rilevanza rispetto alla currency
+
+\subsubsection{Completability}
+Essendo i nostri dataset originari di servizi Web e riflettendo eventi reali distribuiti durante l'anno, ne vengono costantemente pubblicate versioni aggiornate.
+
+La \textit{Completabilità} è un'interessante metrica che ci permette di visualizzare la dinamica di evoluzione temporale della completezza.
+
+Consideriamo una funzione $C(t)$, definita come il valore della completezza all'istante t, con $t \in [t\_pub, t\_max]$, con $t\_pub$
+
+
+cation of data and t max corresponds to the maximum time within which the
+series of the different scheduled updates will be completed. Starting from the
+
+
+$C_t$ \cite{batini2006}
+
+$$\int_{t\_curr}^{t\_max} C_t$$
+
+Per dare un'idea di che Completabilità esibiscono i dataset che consideriamo, indipendenemente dalla stagione a cui si riferiscono, supponiamo che:
+
+
+\begin{itemize}
+	\item Il ritardo con cui otteniamo i dati sia trascurabile, i.e. ad un istante $t$ abbiamo i dati delle partite fino a $t-1$;
+\end{itemize}
+
+	La completezza dei dati, in un istante \textit{t}, è data da $$ C_t = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100 $$
+	Dove \begin{itemize}
+		\item $M_y$ è il numero totale di partite nella stagione $y$;
+		\item $m_{c,t}$ il numero totale di partite nella stagione $y$ fino all'istante $t$;
+		\item $c$ la stagione considerata
+		\item $p$ numero di stagioni precedenti a quella che si vuole considerare che si suppongono rilevanti e parte del dataset.
+	\end{itemize}
+
+Considerando tutti gli istanti t in cui siano giocate delle partite, ottenute da \cite{schedule2019} e utilizzando y = 2019, c = 3 (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic}.
+
+Completabilità è definita dall'area segnata come \textit{Cb}.
+
 \begin{figure}
 \caption{Rappresentazione grafica della completabilità}
+\label{completabilitypic}
 \includegraphics[width=\linewidth]{completability}
 \end{figure}
