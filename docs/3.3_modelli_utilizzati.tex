@@ -23,4 +23,8 @@ Con task uguale ”prob” il valore $f(z)$ viene automaticamente scalato in un 
 Aggiungendo alla funzione fit il seguente parametro \texttt{search="heuristic10"}
 
 consentiamo la ricerca semiautomatica degli iperparametri ottimali su 10 range diversi per massimizzare la predizione del modello.
-Dopo una ricerca euristica su un sample di 25000 istanze, le metriche più accurate sono state ottenute con il valore C della SVM uguale 1 e kernel “Polydot” ossia polinomiale.
+
+Dopo una ricerca euristica su un sample di 25000 istanze, le metriche più accurate sono state ottenute con il valore C della SVM uguale 1 e kernel “RBFDOT” ossia Radial Basis Function Kernel.
+La funzione di discriminazione di tale Kernel è:
+Formula di https://it.wikipedia.org/wiki/Funzione_radiale_di_base
+
