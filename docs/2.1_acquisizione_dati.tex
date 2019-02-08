@@ -109,39 +109,30 @@ PTS = points scored,\\
 FGA = field goal attempts,\\
 FTA = free throw attempts. \\
 
-% TODO forse questo va in Data Integration?
-
 È stata effettuata un’integrazione, descritta nella \autoref{integrazione},  affinchè ogni tiro registrato in \textit{Shot logs} avesse anche le statistiche e gli indicatori tecnici dell’attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
 
 \subsection{Ipotesi fatte a priori}
 
 Come per ogni altro processo statistico abbiamo innanzitutto dovuto individuare alcune ipotesi ritenute valide, assumendole tali, per poter orientare la parte di Machine Learning verso l’obbiettivo prefissato.
 \par
-Come fondamentale assunzione, riteniamo che l’esito del tiro a canestro possa essere dedotto in maniera abbastanza regolare dagli  attributi messi a disposizione dai due dataset utilizzati. In realtà, per ogni tentato canestro giocano un’innumerevole serie di fattori fisici ed ambientali: per esempio, l’esito viene anche influenzato da come il giocatore poggia il peso poco prima di tirare.
+Come fondamentale assunzione, riteniamo che l’esito del tiro a canestro possa essere dedotto in maniera abbastanza regolare dagli attributi messi a disposizione dai due dataset utilizzati. In realtà, per ogni tentato canestro giocano un’innumerevole serie di fattori fisici ed ambientali: per esempio, l’esito viene anche influenzato da come il giocatore poggia il peso poco prima di tirare.
 \par
 Lavorando su performance dei giocatori dell’NBA, supponiamo anche che le loro abilità e la loro coerenza di tiro rimangano più o meno costanti (ad eccezione di poche partite sopra o sotto il loro standard, situazioni di \textit{outlier}).
 \par
-Ricordiamo inoltre che stiamo considerando la minoranza più forte in assoluto nel vasto mondo del basket, top 1\% dei giocatori agonistici. 
-\par
-%TODO controllare valore?
-\par
-Quindi, i risultati e le considerazioni che otterremo con il modello costruito, non saranno rilevanti per contesti diversi da quello considerato.
-\par
-I due dataset forniscono valori a noi utili che risalgono alla stagione di campionato 2014-2015. Volendo utilizzare i risultati per prevedere gli esiti dei tiri NBA della corrente stagione (2018-2019) dobbiamo supporre che non siano stati introdotti grandi cambiamenti nelle strategie e nel modo di allenare i giocatori, affinchè le dinamiche di gioco rimangano ancora molto simili.
+I due dataset forniscono valori a noi utili che risalgono alla stagione di campionato 2014-2015. Volendo utilizzare i risultati per prevedere gli esiti dei tiri NBA della corrente stagione (2018-2019) dobbiamo supporre che non siano stati introdotti profondi cambiamenti nel regolamento e nelle strategie attuate dagli allenatori, affinchè le dinamiche di gioco rimangano ancora molto simili.
 \par
 Inoltre, risulterà infattibile prevedere l’esito di tiri effettuati da nuovi giocatori entrati nella lega, poichè alcune delle metriche che utilizziamo sono relative allo storico delle loro performance. 
 Una possibile soluzione a questo problema è ricavare valori approssimativi per questi indici consultando altre basi di dati che contengono dati relativi alle performance del giocatore in altre leghe.
 
 \subsection{Misure di qualità dei dataset}
 
-% 2 dimensioni di qualità dei dataset singoli
 \subsubsection{Season stats}
 
 Vengono definiti 53 attributi per ogni giocatore. Alcuni di questi tuttavia rappresentano delle criticità che sporcano il dataset, abbassandone la qualità sia a livello di schema sia a livello di istanze.
 \par
 Innanzitutto riscontriamo una mancata correttezza rispetto al modello: gli attributi \texttt{blanl} e \texttt{blank2} sono indubbiamente campi inutili: nessuna istanza ha valori definiti per queste due colonne. Sono probabilmente refusi della fase di scraping dei dati e vanno eliminati perchè non esistenti nel modello ER e perchè intaccano la minimality del dataset.
 \par
-Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, mostrando un chiaro caso di incompletezza: sul totale di 1283984 valori 154921 sono vuoti, per un’incompletezza che si attesta sullo 0,12\%.
+Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, mostrando un chiaro caso di incompletezza: sul totale di 1 283 984 valori 154 921 sono vuoti, per un’incompletezza che si attesta sullo 0.12\%.
 
 \begin{center}
 	\begin{longtable}[m]{|m{3em} m{3em} m{3em} m{3em} m{3em} m{3em} m{3em}|} 
@@ -155,11 +146,11 @@ Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, m
 	\end{longtable}
 \end{center}
 
-Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24692. Si tratta di una chiave non molto utile per il tipo di dataset: le performance dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
+Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24 692. Si tratta di una chiave non molto utile per il tipo di dataset: le statistiche dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
 
 \subsubsection{Shot logs}
 
-Questo dataset presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza dello 4,35\%: per 5577 istanze su 128069 il suo valore non è specificato.
+Questo dataset presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza del 4.35\%: per 5 577 istanze su 128 069 il suo valore non è specificato.
 Infine i valori delle colonne \texttt{player\_name} e \texttt{closest\_def} mancano di correttezza: giocatori con lo stesso id (quindi corrispondenti allo stesso giocatore) sono rappresentati con formati e capitalizzazioni diverse: \texttt{player\_name} infatti il segue il formato \texttt{Cognome, Nome} con le iniziali maiuscole, mentre in \texttt{closest\_def} il formato è \texttt{nome cognome} tutto in minuscolo. È un caso di eterogeneità a livello di istanze.
 
 \par

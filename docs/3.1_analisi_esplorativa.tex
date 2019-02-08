@@ -18,7 +18,7 @@ Analogamente, in Seasons stats sono stati esclusi decine di indici statistici no
 Alcuni dati che sarebbe stato interessante avere, ma assenti nelle nostri fonti, riguardano informazioni più specifiche inerenti alla partita, come ad esempio la precisa posizione dei giocatori sul rettangolo di gioco piuttosto che l’effettiva distanza tra essi, oppure la stabilità dell’attaccante durante il tiro (o durante la difesa nel caso del difensore). Queste e altre dinamiche di gioco permetterebbero di creare modelli più approfonditi in modo da fornire predizioni più fedeli.
 
 \par
-I valori da predire sono distribuiti in modo non uniforme. Il 55\% (70157 record) sono tiri \textit{missed}, mentre il 45\% (57900 record) sono tiri \textit{made}(\autoref{dist_shot_result}).
+I valori da predire sono distribuiti in modo non uniforme. Il 55\% (70 157 record) sono tiri \textit{missed}, mentre il 45\% (57 900 record) sono tiri \textit{made}(\autoref{dist_shot_result}).
 
 \begin{figure}
 \caption{Distribuzione degli esiti nel dataset integrato}
@@ -45,8 +45,8 @@ I valori da predire sono distribuiti in modo non uniforme. Il 55\% (70157 record
 \includegraphics[width=\linewidth]{plot_shot_dist_def.png}
 \end{figure}
 
-Il grafico è stato interpretato considerando due regioni: la regione con prevalenza \texttt{made}, ossia quella compresa tra $[0, 10]$ nell'asse delle ascisse e $[5, 40+] $ nell'asse delle ordinate, e la regione con prevalenza \texttt{missed}, ossia quella compresa tra $[25, 40]$ nell'asse delle ascisse e $[0, 20] $ nell'asse delle ordinate.
-Abbiamo intepretato le distribuzioni di queste due regioni rintracciando quello che succede sul campo: i tiri effettuati dal pitturato (area sottostante al canestro), seppur con il difensore alle calcagne, hanno una probabilità di essere messi a segno molto alta. I tiri effettuati dalla distanza, invece, sono di notevole difficoltà e la probabilità di fallimento è alta anche se l'attaccante è un giocatore efficiente ed affidabile.
+Il grafico è stato interpretato considerando due regioni: la regione con prevalenza \texttt{made}, ossia quella compresa tra $[0, 10]$ nell'asse delle ascisse e $[5, 60] $ nell'asse delle ordinate, e la regione con prevalenza \texttt{missed}, ossia quella compresa tra $[25, 40]$ nell'asse delle ascisse e $[0, 20] $ nell'asse delle ordinate.
+Abbiamo intepretato le distribuzioni di queste due regioni rintracciando quello che succede sul campo: i tiri effettuati dal pitturato (area sottostante al canestro), seppur con il difensore molto vicino, hanno una probabilità di essere messi a segno molto alta. I tiri effettuati dalla distanza, invece, sono notoriamente più difficili ed in questo caso è la probabilità di fallimento ad essere più elevata.
 
 \par
 
@@ -56,10 +56,10 @@ Abbiamo intepretato le distribuzioni di queste due regioni rintracciando quello 
 \includegraphics[width=\linewidth]{shot_dist_with_position}
 \end{figure}
 
-Il grafico in \autoref{position_shot_dist} mostra che C, il componente della squadra che domina il pitturato, tira in media da una distanza inferiore ai 10 piedi, seguito da PF. I giocatori in questo ruolo prendono quindi tiri meno rischiosi.
-Non abbiamo a disposizione informazioni relative a peso e altezza, ma i dati  \cite{basketball-reference} mostrano che in media in questi due ruoli giocano gli atleti più fisicamente dotati: soffrendo meno il contatto con l'avversario riescono a raggiungere più facilmente il canestro.
+Il grafico in \autoref{position_shot_dist} mostra che C, il componente della squadra che domina il pitturato, tira in media da una distanza inferiore ai 10 piedi, seguito da PF. I giocatori in questo ruolo prendono quindi tiri ad indice di difficoltà più basso rispetto alla media.
+Non abbiamo a disposizione informazioni relative a peso e altezza, ma i dati \cite{basketball-reference} mostrano che in media in questi due ruoli giocano gli atleti più fisicamente dotati: soffrendo meno il contatto con l'avversario riescono a raggiungere più facilmente il canestro.
 
-Al contrario, gli altri tre ruoli (PG, SF e SF) tirano da una distanza che si aggira intorno ai 15 piedi. Sono meno prestanti dal punto di vista fisico ma solitamente con un'abilità al tiro maggiore, che li porta a prendere anche tiri rischiosi e più difficili, portando ad abbassare le loro statistiche.
+Al contrario, gli altri tre ruoli (PG, SF e SF) tirano da una distanza che si aggira intorno ai 15 piedi. Solitamente sono meno prestanti dal punto di vista fisico ma con un'abilità al tiro superiore, che li porta a prendere anche tiri di notevole difficoltà dalla distanza.
 
 \begin{figure}
 \caption{Successo dei tiri rispetto al ruolo del giocatore}
@@ -67,6 +67,5 @@ Al contrario, gli altri tre ruoli (PG, SF e SF) tirano da una distanza che si ag
 \includegraphics[width=\linewidth]{made_missed_barplot}
 \end{figure}
 
-La \autoref{position_shots} conferma questa intepretazione: PF ha una percentuale di missed pari a 0.53; ancora più bassa la percentuale di missed per C, pari a 0.49: l'unico ruolo ad avere un numero di tiri made maggiori rispetto ai missed ma anche la posizione con il numero minore di tiri effettuati.
-
-I tre ruoli più delicati (PG, SF, SG) hanno una percentuale di missed pari a 0.57.
+La \autoref{position_shots} conferma questa intepretazione: PF ha una percentuale di missed pari a 0.53, mentre addirittura inferiore (0.49) è la la percentuale di missed per C, per di più l'unico ruolo ad avere un numero di tiri made maggiori rispetto ai missed ma anche quello con il minor numero di tiri effettuati.
+Gli altri tre ruoli (PG, SF, SG) hanno una percentuale di missed pari a 0.57.

@@ -3,19 +3,17 @@
 
 L’analisi esplorativa dei due datasets, anche in vista dell’applicazione dei metodi di Machine Learning, ha prodotto come risultato due nuovi datasets composti da un insieme ridotto di attributi, ritenuti rilevanti e non ridondanti per lo studio e gli obiettivi prefissati. Il numero di record è rimasto inalterato.
 \par
-L’integrazione dei due nuovi datasets ha avuto luogo in due passi separati. Inizialmente, sono stati utilizzati con una componente \textit{tMap} per associare al dataset dei tiri le statistiche degli attaccanti. Dopodiché, questo dataset consistente dei nuovi attributi è stato utilizzato assieme al dataset delle statistiche per associare, con un altro componente \textit{tMap}, le informazioni relative al difensore.
+L’integrazione dei due nuovi datasets ha avuto luogo in due passi separati. Inizialmente, sono stati utilizzati con una componente \textit{tMap} per associare al dataset dei tiri le statistiche degli attaccanti. Dopodiché, questo dataset consistente dei nuovi attributi è stato utilizzato assieme al dataset delle statistiche per associare, con un'altra componente \textit{tMap}, le informazioni relative al difensore.
 \par
 \begin{figure}[H]
 \caption{Pipeline d'integrazione dati implementata con \textit{Talend Studio}}
 	\includegraphics[width=\linewidth]{pipeline_talend1.png}
 \end{figure}
 
-Non utilizzando un id univoco che identifica un giocatore per effettuare l’integrazione tra i due datasets ma i nomi stessi degli atleti, abbiamo optato per l’utilizzo della stessa funzione descritta nella \autoref{preparazione}, così da uniformare i nomi presenti (scritti in minuscolo ordinati lessicograficamente) nei due datasets. 
+Non utilizzando un ID univoco che identifica un giocatore per effettuare l’integrazione tra i due datasets ma i nomi stessi degli atleti, abbiamo optato per l’utilizzo della stessa funzione descritta nella \autoref{preparazione}, così da uniformare i nomi presenti (scritti in minuscolo ordinati lessicograficamente) nei due datasets. 
 \par
 
-
-
-Effettuata l’integrazione, per verificare la consistenza del matching ad ogni passo è stato creato un file denominato \textit{rejected} in cui sono state inserite le istanze respinte, non trovando corrispondenza perfetta.
+Effettuata l’integrazione, per verificare la consistenza del matching in ciascuno dei due passi è stato creato un file denominato \textit{rejected} in cui sono state inserite le istanze respinte, non trovando una corrispondenza perfetta.
 \par
 Circa una decina di nomi sono risultati in questa lista: sono risolti manualmente nella routine \texttt{EditShotLogs\_0.1.java}, eseguita in pipeline da Talend, poichè sarebbe stato problematico e dispendioso usare funzioni di edit distance appositamente parametrizzate per così pochi e particolari casi.
 
@@ -58,21 +56,19 @@ public static String matchNames(String name1) {
 \end{minted}
 \end{code}
 
-% todo aggiungere esempi di mismatch così si capisce che non aveva senso fare la funzione
-
 \subsection{Misure di qualità del dataset integrato}
 
 \subsubsection{Currency, Volatility e Timeliness}
 Un aspetto importante dei dati coinvolti nel nostro processo di integrazione è il loro cambiamento nel tempo. I database a nostra disposizione contemplano l’anno di campionato 2014-2015 ma è ovvio che questi vengano continuamente aggiornati e integrati con il corso dei campionati.
 
-\textit{Currency}, definita come la velocità degli aggiornamenti \cite{batini2006}, ed una suo metrica è calcolabile con la seguente formula\cite{doi:10.1287/mnsc.44.4.462}
+\textit{Currency}, definita come la velocità degli aggiornamenti \cite{batini2006}, è calcolabile con la seguente formula\cite{doi:10.1287/mnsc.44.4.462}
 $$Currency = Age + (DeliveryTime - InputTime)$$
 \textit{Age} misura l'età dei dati quando vengono ricevuti, \textit{DeliveryTime} è l'istante in cui il prodotto che utilizza queste informazioni è consegnato all'utente finale mentre \textit{InputTime} è l'istante in cui il dato è stato effettivamente ottenuto.
 Il termine $(DeliveryTime - InputTime)$ misura quindi il periodo di tempo che trascore prima che il prodotto che utilizza i nostri dati sia pronto ed effettivamente utilizzabile.
 
 Poichè l’anno corrente è 2019, i dati hanno una \textit{Age} di 4 anni. $(DeliveryTime - InputTime)$ risulta quindi trascurabile e \textit{Currency} è equivalente  ad \textit{Age}.
 
-Supponiamo inoltre che le statistiche dell’NBA rimangano rilevanti per le 3 stagioni successive, la \textit{volatilità} dei dati è uguale a 3 anni.
+Supponendo inoltre che le statistiche dell’NBA rimangano rilevanti per le 3 stagioni successive, la \textit{volatilità} dei dati è uguale a 3 anni.
 
 \textit{Timeliness}, calcolata con 
 
@@ -121,7 +117,7 @@ Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, i
 		\item $p$ numero di stagioni precedenti a quella che si vuole considerare che si suppongono rilevanti e parte del dataset.
 	\end{itemize}
 
-Considerando tutti gli istanti t in cui siano giocate delle partite, ottenute da \cite{nba_schedule} e utilizzando $y = 2019, c = 3$ (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic} attestandosi su un valore medio.
+Considerando tutti gli istanti $t$ in cui siano giocate delle partite, ottenute da \cite{nba_schedule} e utilizzando $y = 2019, c = 3$ (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic} attestandosi su un valore medio.
 
 \begin{figure}
 \caption{Rappresentazione grafica della completabilità nel nostro esempio}
