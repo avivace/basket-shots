@@ -10,15 +10,13 @@
 \usepackage{wrapfig}
 \usepackage{setspace}
 \usepackage{amsthm}
-% Include SVG, converting them with Inkscape
+% Allow include SVGs, converting them with Inkscape
 \usepackage{svg}
 %\usepackage[utf8]{inputenc}
 % Allows setting fixed width in tables columns
 \usepackage{array}
 % Allows breaking tables in multiple pages
 \usepackage{longtable}
-% Change table captions
-\renewcommand\tablename{Tabella} 
 % Syntax highlighted code blocks using Pygment
 \usepackage{minted}
 % Use custom fonts, used to redefine the monospaced font
@@ -27,33 +25,36 @@
 \usepackage{xcolor}
 % Bibliography in ToC
 \usepackage[nottoc,notlot,notlof]{tocbibind}
-% Change Bibliography name
-\renewcommand{\bibname}{Bibliografia}
-% Change Listing caption
-\renewcommand\listingscaption{Listato}
-% Change Figures caption
-\renewcommand{\figurename}{Figura}
 % Typesetting quotes
 \usepackage{csquotes}
 % Force figure placement
 \usepackage{float}
+
+% Translate autoref names
 \renewcommand{\sectionautorefname}{sezione}
 \renewcommand{\tableautorefname}{tabella}
 \renewcommand{\figureautorefname}{figura}
 
-\setmonofont{Iosevka}[Scale=0.85]
-
-% Linked ToC
-\hypersetup{
-    linktoc=all,     %set to all if you want both sections and subsections linked
-}
-
-% Code blocks labels
+% Translate captions
+\renewcommand\listingscaption{Listato}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\bibname}{Bibliografia}
+\renewcommand\tablename{Tabella}
 \newenvironment{code}{\captionsetup{type=listing}}{}
+\renewcommand{\contentsname}{Indice}
 
+% Caption appeareance
 \usepackage[font=footnotesize, labelfont=bf]{caption}
 \captionsetup[table]{position=below}
 \captionsetup[figure]{position=below}
+
+% Set monospaced typeface
+\setmonofont{Iosevka}[Scale=0.85]
+
+% Linked ToC
+\hypersetup {
+    linktoc=all, % both sections and subsections linked
+}
 
 % Chapter titles
 \graphicspath{ {images/} }
@@ -61,8 +62,6 @@
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray90}{|}\hsp}{0pt}{\Huge\bfseries}
 \newcommand{\hsp}{\hspace{10pt}}
 
-% Redefine Table of Contents title
-\renewcommand{\contentsname}{Indice}
 
 \begin{document}
 
