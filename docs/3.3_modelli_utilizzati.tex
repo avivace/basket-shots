@@ -1,0 +1,9 @@
+\section{Modelli di Machine Learning utilizzati}
+
+La scelta del modello di machine learning da utilizzare può variare in base al dataset a disposizione. Il nostro dataset integrato ha un buon numero di attributi, sia numerici che categorici.
+Abbiamo deciso di utilizzare SVM, che è un algoritmo di apprendimento automatico supervisionato ampiamente utilizzato per problemi di classificazione. Il suo punto di forza è l'utilizzo del cosiddetto \textit{kernel trick}, utilizzato per mappare l'input in uno spazio multi-dimensionale. SVM performa bene con dataset composti da tanti attributi e numerose osservazioni.
+La presenza di attributi categorici porterebbe a preferire gli alberi di decisione, ma esistono alcune tecniche che possono trasformare queste tipologie di attributi: quella da noi utilizzata è la tecnica di one-hot encoding, in cui gli attributi categorici vengono trasformati in attributi numerici sparsi (ovvero composti da molti zeri).
+
+Nonostante gli aspetti positivi, è difficile deteminare se è la tecnica ideale per allenare il nostro dataset poiché non c'è un motivo discriminante che porta a preferirla rispetto ad altre come reti neurali oppure alberi di decisione.
+
+% Scelta di C (complexity paramater) e Sigma (gaussian kernel parameter)

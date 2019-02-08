@@ -16,8 +16,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 20000)
-#dataset$SHOT_CLOCK = as.numeric(as.character(dataset$SHOT_CLOCK))
+dataset = head(dataset, 4000)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -64,7 +63,8 @@ trainset= allset$train
 testset= allset$test
 
 # Train model
-model=fit(shot_result~.,trainset,model="svm", task="prob", mpar=c(C=1, epsilon=1))
+model=fit(shot_result~.,trainset,model="ksvm", task="prob", C=3,
+          mpar=c(sigma=2^-7), fdebug=TRUE)
 # Importance
 I = Importance(model, trainset, method="1D-SA")
 print(round(I$imp,digits=2))
