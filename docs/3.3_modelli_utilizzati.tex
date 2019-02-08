@@ -1,9 +1,30 @@
 \section{Modelli di Machine Learning utilizzati}
 
-La scelta del modello di machine learning da utilizzare può variare in base al dataset a disposizione. Il nostro dataset integrato ha un buon numero di attributi, sia numerici che categorici.
-Abbiamo deciso di utilizzare SVM, che è un algoritmo di apprendimento automatico supervisionato ampiamente utilizzato per problemi di classificazione. Il suo punto di forza è l'utilizzo del cosiddetto \textit{kernel trick}, utilizzato per mappare l'input in uno spazio multi-dimensionale. SVM performa bene con dataset composti da tanti attributi e numerose osservazioni.
-La presenza di attributi categorici porterebbe a preferire gli alberi di decisione, ma esistono alcune tecniche che possono trasformare queste tipologie di attributi: quella da noi utilizzata è la tecnica di one-hot encoding, in cui gli attributi categorici vengono trasformati in attributi numerici sparsi (ovvero composti da molti zeri).
-
-Nonostante gli aspetti positivi, è difficile deteminare se è la tecnica ideale per allenare il nostro dataset poiché non c'è un motivo discriminante che porta a preferirla rispetto ad altre come reti neurali oppure alberi di decisione.
 
 % Scelta di C (complexity paramater) e Sigma (gaussian kernel parameter)
+
+La scelta del modello di machine learning da utilizzare può variare in base al dataset a disposizione. Il nostro dataset integrato ha un buon numero di attributi, sia numerici che categorici.
+Abbiamo deciso di utilizzare SVM che è un algoritmo di apprendimento automatico supervisionato ampiamente utilizzato per problemi di classificazione. Il suo punto di forza è l'utilizzo del cosiddetto \textit{kernel trick}, strumento matematico per mappare l'input in uno spazio multi-dimensionale. SVM performa bene con dataset composti da tanti attributi e numerose osservazioni, adeguato sotto questo punto di vista al nostro caso.
+La presenza di attributi categorici porterebbe a preferire gli alberi di decisione, ma esistono alcune tecniche che possono trasformare queste tipologie di campi affinchè siano compatibili anche con le SVM: quella da noi utilizzata è la tecnica di one-hot encoding, in cui gli attributi categorici vengono trasformati in attributi numerici sparsi (ovvero composti da molti zeri).
+Nonostante gli aspetti positivi, è difficile determinare se la SVM sia la tecnica ideale per allenare il nostro dataset. Non esiste infatti un motivo davvero discriminante che porti a preferirla rispetto ad altri modelli come le reti neurali oppure gli alberi di decisione.
+Inizialmente abbiamo provato ad implementare la SVM con il package R chiamato e1071, ma il dataset utilizzato contiene un numero eccessivo di istanze e la computazione risultava troppo onerosa (cannot allocate vector in R of size xx Gb). Abbiamo sperimentato anche con il package liquidSVM ma non erano presenti di default funzionalità utili allo sviluppo del progetto come la ROC e l'AUC, quindi abbiamo optato per il package rminer che implementa l’algoritmo della SVM di Kernlabs, basato sul paper di Platt (LINKARE PAPER) in cui viene descritto il metodo ad oggi più efficiente per ottenere stime probabilistiche sulla classificazione del test set con una SVM.
+Una volta importato e suddiviso il dataset per l’apprendimento automatico, la seguente riga produce e allena il modello:
+
+\texttt{model=fit(shot_result~., trainset, model="svm", task="prob")}
+
+Sebbene il nostro sia un problema di classificazione, settare il parametro task a \textit{prob} ci permette di ottenere dalla logica di SVM il valore $ f(z) $ calcolato per ogni istanza di test $z$, piuttosto che il semplice segno aritmetico $sign(f(z))$ che indica una posizione minore o maggiore rispetto alla threshold, determinando la classe di appartenenza:
+
+f(z)=wTϕ(z)+b,=∑i∈SVαiyiκ(xi,z)+b 
+
+(https://stats.stackexchange.com/questions/134156/can-i-use-svm-classification-probability-for-ranking)
+
+
+Con task uguale ”prob” il valore $f(z)$ viene automaticamente scalato in un range $[0, 1]$ con la tecnica chiamata \textit{Platt scaling}, producendo quindi una stima della probabilità di classificazione.
+Aggiungendo alla funzione fit il seguente parametro \texttt{search="heuristic10"}
+
+consentiamo la ricerca semiautomatica degli iperparametri ottimali su 10 range diversi per massimizzare la predizione del modello.
+
+Dopo una ricerca euristica su un sample di 25000 istanze, le metriche più accurate sono state ottenute con il valore C della SVM uguale 1 e kernel “RBFDOT” ossia Radial Basis Function Kernel.
+La funzione di discriminazione di tale Kernel è:
+Formula di https://it.wikipedia.org/wiki/Funzione_radiale_di_base
+
