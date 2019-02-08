@@ -62,13 +62,23 @@ public static String matchNames(String name1) {
 
 \subsection{Misure di qualità del dataset integrato}
 
-\subsubsection{Currency}
+\subsubsection{Currency, Volatility e Timeliness}
 Un aspetto importante dei dati coinvolti nel nostro processo di integrazione è il loro cambiamento nel tempo. I database a nostra disposizione contemplano l’anno di campionato 2014-2015 ma è ovvio che questi vengano continuamente aggiornati e integrati con il corso dei campionati.
 
 \textit{Currency}, definita come la velocità degli aggiornamenti \cite{batini2006}, ed una suo metrica è calcolabile con la seguente formula\cite{doi:10.1287/mnsc.44.4.462}
 $$Currency = Age + (DeliveryTime - InputTime)$$
-Poichè l’anno corrente è 2019, i dati hanno una Age di 4 anni. Supponendo poi che \textit{DeliveryTime} coincida con l’\textit{InputTime}, la nostra Currency corrisponde all’età dei dati.
-Le statistiche dell’NBA rimangono rilevanti per l’anno successivo (l'idea è allenare il modello con i dati sul campionato passato ed utilizzarlo per gli eventi di quello in corso) quindi la \textit{volatilità} dei dati è uguale ad 1 anno.
+\textit{Age} misura l'età dei dati quando vengono ricevuti, \textit{DeliveryTime} è l'istante in cui il prodotto che utilizza queste informazioni è consegnato all'utente finale mentre \textit{InputTime} è l'istante in cui il dato è stato effettivamente ottenuto.
+Il termine $(DeliveryTime - InputTime)$ misura quindi il periodo di tempo che trascore prima che il prodotto che utilizza i nostri dati sia pronto ed effettivamente utilizzabile.
+
+Poichè l’anno corrente è 2019, i dati hanno una \textit{Age} di 4 anni. $(DeliveryTime - InputTime)$ risulta quindi trascurabile e \textit{Currency} è equivalente  ad \textit{Age}.
+
+Supponiamo inoltre che le statistiche dell’NBA rimangano rilevanti per le 3 stagioni successive, la \textit{volatilità} dei dati è uguale a 3 anni.
+
+\textit{Timeliness}, calcolata con 
+
+$$\max\{{0, 1 - \frac{Currency}{Volatility}}\}$$
+
+Vale quindi 0, rappresentando una cattiva tempestività del nostro dataset.
 
 \begin{figure}
 \caption{Rappresentazione grafica della completabilità}
