@@ -93,11 +93,12 @@ txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_resul
 mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
 
 # Cross validation
-valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, task="prob", model="svm")
+valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
+                       task="prob", model="svm")
 accuracy=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ACC"))
 print(accuracy)
-m=mmetric(dataset$shot_result,prediction,metric=c("AUC"))
+m=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
 print(m)
-txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=2),2))
-mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
+txt=paste(levels(dataset$shot_result)[2],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=2),2))
+mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
 
