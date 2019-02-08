@@ -81,31 +81,39 @@ $$\max\{{0, 1 - \frac{Currency}{Volatility}}\}$$
 Vale quindi 0, rappresentando una cattiva tempestività del nostro dataset.
 
 % dare rilevanza rispetto alla currency
-
+\pagebreak
 \subsubsection{Completability}
 Essendo i nostri dataset originari di servizi Web e riflettendo eventi reali distribuiti durante l'anno, ne vengono costantemente pubblicate versioni aggiornate.
 
 La \textit{Completabilità} è un'interessante metrica che ci permette di visualizzare la dinamica di evoluzione temporale della completezza.
 
-Consideriamo una funzione $C(t)$, definita come il valore della completezza all'istante t, con $t \in [t\_pub, t\_max]$, con $t\_pub$
+Consideriamo una funzione $C(t)$, definita come il valore della completezza all'istante t, con $t \in [t_{pub}, t_{max}]$, dove $t_{pub}$ è l'istante iniziale di pubblicazione dei dati e $t_{max}$ il tempo massimo in cui verrà completato l'ultimo degli aggiornamenti dei dati previsiti.
 
-
-cation of data and t max corresponds to the maximum time within which the
-series of the different scheduled updates will be completed. Starting from the
-
-
-$C_t$ \cite{batini2006}
+La \textit{completabilità} dei dati è quindi definibile come \cite{batini2006}:
 
 $$\int_{t\_curr}^{t\_max} C_t$$
 
-Per dare un'idea di che Completabilità esibiscono i dataset che consideriamo, indipendenemente dalla stagione a cui si riferiscono, supponiamo che:
+Con $t_{curr}$ è l'instante in cui essa viene calcolata ($t_{curr} < t_{max}$).
+
+La \autoref{completabilitypic_gen} generalizza come si presenta, dove $c_{i}$ valore di completezza stimato per un generico $t_{i}$. La Completabilità è definita dall'area segnata come \textit{Cb}. Il confronto con A permette di definire gli intervalli $[Alto, Media, Bassa]$ per la completabilità.
+
+
+\begin{figure}
+\caption{Rappresentazione grafica della completabilità}
+\label{completabilitypic_gen}
+\includegraphics[width=\linewidth]{completability_gen.png}
+\end{figure}
+
+\par
+
+Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, indipendenemente dalla stagione a cui si riferiscono, supponiamo che:
 
 
 \begin{itemize}
-	\item Il ritardo con cui otteniamo i dati sia trascurabile, i.e. ad un istante $t$ abbiamo i dati delle partite fino a $t-1$;
+	\item Il ritardo con cui otteniamo i dati sulle partite appena avvenute sia trascurabile, i.e. ad un istante $t$ si abbiano i dati delle partite fino a $t-1$;
 \end{itemize}
 
-	La completezza dei dati, in un istante \textit{t}, è data da $$ C_t = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100 $$
+	La completezza dei dati, in un istante \textit{t}, è stimabile con $$ C(t) = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100 $$
 	Dove \begin{itemize}
 		\item $M_y$ è il numero totale di partite nella stagione $y$;
 		\item $m_{c,t}$ il numero totale di partite nella stagione $y$ fino all'istante $t$;
@@ -113,12 +121,10 @@ Per dare un'idea di che Completabilità esibiscono i dataset che consideriamo, i
 		\item $p$ numero di stagioni precedenti a quella che si vuole considerare che si suppongono rilevanti e parte del dataset.
 	\end{itemize}
 
-Considerando tutti gli istanti t in cui siano giocate delle partite, ottenute da \cite{schedule2019} e utilizzando y = 2019, c = 3 (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic}.
-
-Completabilità è definita dall'area segnata come \textit{Cb}.
+Considerando tutti gli istanti t in cui siano giocate delle partite, ottenute da \cite{nba_schedule} e utilizzando $y = 2019, c = 3$ (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic} attestandosi su un valore medio.
 
 \begin{figure}
-\caption{Rappresentazione grafica della completabilità}
+\caption{Rappresentazione grafica della completabilità nel nostro esempio}
 \label{completabilitypic}
 \includegraphics[width=\linewidth]{completability}
 \end{figure}
