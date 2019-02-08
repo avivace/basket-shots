@@ -38,8 +38,15 @@
 % Force figure placement
 \usepackage{float}
 \renewcommand{\sectionautorefname}{sezione}
+\renewcommand{\tableautorefname}{tabella}
+\renewcommand{\figureautorefname}{figura}
 
 \setmonofont{Iosevka}[Scale=0.85]
+
+% Linked ToC
+\hypersetup{
+    linktoc=all,     %set to all if you want both sections and subsections linked
+}
 
 % Code blocks labels
 \newenvironment{code}{\captionsetup{type=listing}}{}
