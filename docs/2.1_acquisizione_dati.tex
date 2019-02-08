@@ -47,18 +47,18 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 	\end{longtable}
 \end{center}
 
-\texttt{percentage\_previous\_game} è una nuova feature che abbiamo computato dai dati esistenti. Rappresenta la percentuale di successo al tiro fino a quel momento in stagione. Il suo valore è stato ottenuto il seguente script Python che, facendo uso della libreria \texttt{Pandas}, aggrega i dati delle partite precedenti a quella a cui si riferisce il tiro in questione.
+\texttt{percentage\_previous\_game} è una nuova feature che abbiamo computato dai dati esistenti. Rappresenta la percentuale di successo al tiro fino a quel momento in stagione. Il suo valore è stato ottenuto il seguente script Python che, facendo uso della libreria \textit{Pandas}, aggrega i dati delle partite precedenti a quella a cui si riferisce il tiro in questione.
 
 \begin{code}
 \captionof{listing}{datasets/shot\_logs\_nv.py}
 \inputminted[breaklines]{python}{../datasets/shot_logs_nv.py}
 \end{code}
 
-Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \textit{TS}, ovvero la percentuale di successo al tiro riferito a tutta la sua carriera (\textit{True Shooting}), proveniente dall’altro dataset che abbiamo preso in considerazione, \texttt{Season\_stats.csv}.
+Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \texttt{TS}, ovvero la percentuale di successo al tiro riferito a tutta la stagione (\textit{True Shooting}), proveniente dall’altro dataset che abbiamo preso in considerazione, \textit{Seasons stats}.
 
-\subsection{Season stats}
+\subsection{Seasons stats}
 
-\texttt{Season\_stats.csv} \cite{season_stats} contiene le statistiche inerenti agli atleti e alle loro performance, dal 1950 al 2017. I dati sono originari del sito Basketball Reference, prelevati usando tecniche di \textit{web scraping}.
+\texttt{Seasons\_stats.csv} \cite{season_stats} contiene le statistiche inerenti agli atleti e alle loro performance, dal 1950 al 2017. I dati sono originari del sito Basketball Reference\cite{basketball-reference}, prelevati usando tecniche di \textit{web scraping}.
 
 \begin{center}
 	\begin{longtable}[m]{|m{5em} m{7em} m{16em}|} 
@@ -80,20 +80,33 @@ Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_prev
 		\hline
 		MP & int & Minuti totali giocati\\ 
 		\hline
-		PER & float & \textit{Player Efficiency Rating}, indicatore tecnico per valutare la bravura di un giocatore \\ 
+		PER & float & \textit{Player Efficiency Rating}\\ 
 		\hline
-		TS\% & float & \textit{True Shooting Percentage}, un misuratore tecnico per valutare l’efficienza di tiro di un giocatore  \\ 
+		TS\% & float & \textit{True Shooting Percentage}\\ 
 		\hline
 		BLK\% & float & \textit{Block Percentage}, la percentuale di blocchi effettuati \\ 
 		\hline
 
 	\end{longtable}
 \end{center}
+\textit{PER} è indicatore tecnico per valutare la bravura di un giocatore. Definito nel 1989 da John Hollinger
+\begin{displayquote}
+ The PER sums up all a player's positive accomplishments, subtracts the negative accomplishments, and returns a per-minute rating of a player's performance. 
+ \end{displayquote}
+Il calcolo del suo valore è piuttosto complesso \cite{BRper}.
+\par
+\textit{TS\%}, misuratore tecnico per valutare l’efficienza di tiro di un giocatore, è invece definito in \cite{BRglossary} come:
 
-% TODO descrivere PER e TS\%
+$$TS\% = \frac{PTS}{ 2(FGA + (0.44 \times FTA))}\times100$$
+
+Dove \\
+PTS = points scored,\\
+FGA = field goal attempts,\\
+FTA = free throw attempts. \\
+
 % TODO forse questo va in Data Integration?
 
-È stata effettuata un’integrazione affinchè ogni tiro registrato in \texttt{shot\_logs.csv} avesse anche le statistiche e gli indicatori tecnici dell’attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
+È stata effettuata un’integrazione, descritta nella \autoref{integrazione},  affinchè ogni tiro registrato in \textit{Shot logs} avesse anche le statistiche e gli indicatori tecnici dell’attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
 
 \subsection{Ipotesi fatte a priori}
 
@@ -137,11 +150,12 @@ Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, m
 	\end{longtable}
 \end{center}
 
-Infine la chiave principale per le istanze è un id incrementale che va da 0 a 24692. Si tratta di una chiave non molto utile per il tipo di dataset: le performance dei giocatori andrebbero indicizzati con un id univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
+Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24692. Si tratta di una chiave non molto utile per il tipo di dataset: le performance dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
 
 \subsubsection{Shot logs}
 
 Questo dataset presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza dello 4,35\%: per 5577 istanze su 128069 il suo valore non è specificato.
-Infine i valori delle colonne \texttt{player\_name} e \texttt{closest\_def} mancano di correttezza: giocatori con lo stesso id (quindi corrispondenti allo stesso giocatore) sono rappresentati con formati e capitalizzazioni diverse: \texttt{player\_name} infatti il segue il formato \texttt{Cognome, Nome} con le iniziali maiuscole, mentre in \texttt{closest\_def} il formato è \texttt{nome cognome} tutto in minuscolo.
+Infine i valori delle colonne \texttt{player\_name} e \texttt{closest\_def} mancano di correttezza: giocatori con lo stesso id (quindi corrispondenti allo stesso giocatore) sono rappresentati con formati e capitalizzazioni diverse: \texttt{player\_name} infatti il segue il formato \texttt{Cognome, Nome} con le iniziali maiuscole, mentre in \texttt{closest\_def} il formato è \texttt{nome cognome} tutto in minuscolo. È un caso di eterogeneità a livello di istanze.
+
 \par
 Questo problema caratterizza il 100\% delle istanze.
