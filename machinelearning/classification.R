@@ -17,7 +17,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 25000)
+dataset = head(dataset, 500)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -51,7 +51,7 @@ for (f in feats){
 str(dataset)
 
 # Split dataset helper function
-split.data = function(data, p = 0.7, s = 1) {
+split.data = function(data, p = 0.8, s = 1) {
   set.seed(s)
   index = sample(1:dim(data)[1])
   train = data[index[1:floor(dim(data)[1] * p)], ]
@@ -78,25 +78,6 @@ L=list(runs=1,sen=t(I$imp),sresponses=I$sresponses) # create a simple mining lis
 par(mar=c(2.0,2.0,2.0,2.0)) # enlarge PDF margin
 mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance")
 
-# Print model parameters
-print(model@mpar)
-print(model@time)
-prediction = predict(model, testset)
-metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
-print(metrics)
-auc=mmetric(testset$shot_result,prediction,metric=c("AUC"))
-print(auc) # confusion matrix
-
-m=mmetric(testset$shot_result,prediction,metric=c("ROC"))
-print(m) 
-
-# ROC
-txt=paste(levels(testset$shot_result)[1],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=1),2))
-mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-made")
-txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=2),2))
-mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-missed")
-
-
 # Cross validation
 cl <- makeCluster(detectCores())
 registerDoParallel(cl)
@@ -104,15 +85,7 @@ valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10,
                        task="prob", model="ksvm", kernel="rbfdot", C=1)
 stopCluster(cl)
 
-# Importance
-I=Importance(model, dataset)
-imax=which.max(I$imp)
-L=list(runs=1,sen=t(I$imp),sresponses=I$sresponses) # create a simple mining list
-par(mar=c(2.0,2.0,2.0,2.0)) # enlarge PDF margin
-mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance")
-
 # Print results
-print(valdata$cv.fit)
 print(valdata$mpar)
 
 # Metrics and confusion matrix
@@ -121,7 +94,7 @@ print(metrics)
 conf_matrix = mmetric(dataset$shot_result,valdata$cv.fit,metric=c("CONF"))
 print(conf_matrix)
 
-# AUC and ROC
+# AUC and ROC for SVM
 auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
 print(auc)
 txt=paste(levels(dataset$shot_result)[2],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=2),2))
@@ -130,3 +103,16 @@ mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt
 txt=paste(levels(dataset$shot_result)[1],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=1),2))
 mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-svm-made")
 
+# Decision tree
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
+valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
+                       task="prob", model="rpart")
+stopCluster(cl)
+metrics=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ALL"))
+print(metrics)
+conf_matrix = mmetric(dataset$shot_result,valdata$cv.fit,metric=c("CONF"))
+print(conf_matrix)
+print(valdata$mpar)
+auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
+print(auc)
