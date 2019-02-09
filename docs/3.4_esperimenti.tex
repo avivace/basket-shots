@@ -1,34 +1,43 @@
 \section{Esperimenti e analisi dei risultati}
 
-L'esecuzione della cross validation su SVM ha riportato le seguenti metriche:
+\begin{table}[h!]
+\centering
+  \begin{tabular}{l l} 
+  Accuracy complessiva & xx\\
+  Precision per la classe \textit{made} & xx\\
+  Precision per la classe \textit{missed} & xx\\
+  Recall per la classe \textit{made} & xx\\
+  Recall per la classe \textit{missed} & xx\\
+  F-measure per la classe \textit{made} & xx\\
+  F-measure per la classe \textit{missed} & xx\\
+  Area Under Curve per la classe \textit{made} & xx\\
+  Area Under Curve per la classe \textit{missed} & xx\\
+  Area Under Curve complessiva & xx\\
+    \end{tabular}
+    \caption{Metriche risultate dell'esecuzione della cross validation su SVM}
+\end{table}
 
-\begin{itemize}
-	\item Accuracy complessiva -> xx
-	\item Precision per la classe \textit{made} -> xx
-	\item Precision per la classe \textit{missed} -> xx
-	\item Recall per la classe \textit{made} -> xx
-	\item Recall per la classe \textit{missed} -> xx
-	\item F-measure per la classe \textit{made} -> xx
-	\item F-measure per la classe \textit{missed} -> xx
-	\item Area Under Curve per la classe \textit{made} -> xx
-	\item Area Under Curve per la classe \textit{missed} -> xx
-	\item Area Under Curve complessiva -> xx
 
-\end{itemize}
+Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_gen}.
 
-Queste metriche sono state calcolate direttamente dalla seguente matrice di confusione:
+\begin{table}
 
+\centering
 \noindent
 \renewcommand\arraystretch{1.5}
 \setlength\tabcolsep{0pt}
 \begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
-  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering actual\\ value}}} & 
+\centering
+  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
     & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
   & & \bfseries p & \bfseries n & \bfseries total \\
   & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
   & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
   & total & P & N &
 \end{tabular}
+ \caption{Confusion Matrix}
+ \label{confusion_matrix_gen}
+\end{table}
 
 \par
 Il risultato, intuitivamente un po’ basso, è in realtà in linea con le aspettative: come già anticipato nella sezione 3.1, le circostanze che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al random guessing dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
