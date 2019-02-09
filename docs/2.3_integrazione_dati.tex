@@ -87,15 +87,19 @@ Consideriamo una funzione $C(t)$, definita come il valore della completezza all'
 
 La \textit{completabilità} dei dati è quindi definibile come \cite{batini2006}:
 
-$$\int_{t\_curr}^{t\_max} C_t$$
+$$\int_{t_{curr}}^{t_{max}} C(t)$$
 
-Con $t_{curr}$ è l'instante in cui essa viene calcolata ($t_{curr} < t_{max}$).
+Con $t_{curr}$ l'instante in cui essa viene calcolata ($t_{curr} < t_{max}$).
 
-La \autoref{completabilitypic_gen} generalizza come si presenta, dove $c_{i}$ valore di completezza stimato per un generico $t_{i}$. La Completabilità è definita dall'area segnata come \textit{Cb}. Il confronto con A permette di definire gli intervalli $[Alto, Media, Bassa]$ per la completabilità.
+La \autoref{completabilitypic_gen} generalizza come si presenta, dove $c_{i}$ valore di completezza stimato per un generico $t_{i}$.
+
+% TODO: definizione di A
+
+La Completabilità è definita dall'area segnata come \textit{Cb}. Il confronto con $A$ permette di definire gli intervalli $[Alto, Media, Bassa]$ per la completabilità.
 
 
 \begin{figure}
-\caption{Rappresentazione grafica della completabilità}
+\caption{Rappresentazione grafica della completabilità \cite{batini2006}}
 \label{completabilitypic_gen}
 \includegraphics[width=\linewidth]{completability_gen.png}
 \end{figure}
@@ -108,7 +112,7 @@ Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, i
 \begin{itemize}
 	\item Il ritardo con cui otteniamo i dati sulle partite appena avvenute sia trascurabile, i.e. ad un istante $t$ si abbiano i dati delle partite fino a $t-1$;
 \end{itemize}
-
+	% TODO: DECIDERE SE USARE %
 	La completezza dei dati, in un istante \textit{t}, è stimabile con $$ C(t) = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100 $$
 	Dove \begin{itemize}
 		\item $M_y$ è il numero totale di partite nella stagione $y$;
@@ -119,6 +123,7 @@ Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, i
 
 Considerando tutti gli istanti $t$ in cui siano giocate delle partite, ottenute da \cite{nba_schedule} e utilizzando $y = 2019, c = 3$ (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic} attestandosi su un valore medio.
 
+% TODO: Aggiungere C(t) sull'asse Y, sostituire Date con Time nell'asse X.
 \begin{figure}
 \caption{Rappresentazione grafica della completabilità nel nostro esempio}
 \label{completabilitypic}
