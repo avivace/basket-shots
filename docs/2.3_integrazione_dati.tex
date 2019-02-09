@@ -80,8 +80,6 @@ Supponendo inoltre che le statistiche dell'NBA rimangano rilevanti per le 3 stag
 
 Vale quindi 0, rappresentando una cattiva tempestività del nostro dataset.
 
-% dare rilevanza rispetto alla currency
-\pagebreak
 \subsubsection{Completability}
 Essendo i nostri dataset originari di servizi Web e riflettendo eventi reali distribuiti durante l'anno, ne vengono costantemente pubblicate versioni aggiornate.
 
@@ -119,7 +117,7 @@ Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, i
 	\item Il ritardo con cui otteniamo i dati sulle partite appena avvenute sia trascurabile, i.e. ad un istante $t$ si abbiano i dati delle partite fino a $t-1$;
 \end{itemize}
 	% TODO: DECIDERE SE USARE %
-	La completezza dei dati, in un istante \textit{t}, è stimabile con 
+	Stimiamo la completezza percentuale dei dati, in un istante \textit{t}, con 
 	\begin{equation}
 	C(t) = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100
 	\end{equation}
