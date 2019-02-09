@@ -5,7 +5,7 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 \subsection{Shot logs}
 
 
-\texttt{Shot\_logs.csv}\cite{shot_logs} contiene 128 000 record riguardanti i tiri a canestro effettuati da 281 giocatori NBA diversi nella stagione 2014-2015. La fonte originale di questi dati è l’API pubblica del sito dell’NBA.
+\texttt{Shot\_logs.csv}\cite{shot_logs} contiene 128 000 record riguardanti i tiri a canestro effettuati da 281 giocatori NBA diversi nella stagione 2014-2015. La fonte originale di questi dati è l'API pubblica del sito dell'NBA.
 \begin{center}
 	\begin{longtable}[m]{|m{8em} m{7em} m{16em}|} 
 
@@ -29,9 +29,9 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 		\hline
 		Game clock & Date/Time & Minuto e secondo della partita in cui si è effettuato il tiro \\ 
 		\hline
-		Shot Clock & Date/Time & Secondo in cui il tiro viene rilasciato dall’attaccante. L’intervallo va da 0 a 24, in quanto 24 è il tempo massimo a disposizione della squadra per effettuare un’azione \\ 
+		Shot Clock & Date/Time & Secondo in cui il tiro viene rilasciato dall'attaccante. L'intervallo va da 0 a 24, in quanto 24 è il tempo massimo a disposizione della squadra per effettuare un'azione \\ 
 		\hline
-		Dribbles & int & Numero di dribbling effettuati dall’attaccante prima del tiro \\ 
+		Dribbles & int & Numero di dribbling effettuati dall'attaccante prima del tiro \\ 
 		\hline
 		Touch time & float & Secondo del possesso palla in cui il giocatore ha tirato \\ 
 		\hline
@@ -41,11 +41,11 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 		\hline
 		Shot result & factor(made, missed) & Esito del tiro (a segno o fallito) \\ 
 		\hline
-		Closest defender & String & Nome del difensore più vicino all’attaccante \\ 
+		Closest defender & String & Nome del difensore più vicino all'attaccante \\ 
 		\hline
-		Close def dist & int & Distanza tra il difensore più vicino e l’attaccante \\ 
+		Close def dist & int & Distanza tra il difensore più vicino e l'attaccante \\ 
 		\hline
-		Player name & String & Nome dell’attaccante \\ 
+		Player name & String & Nome dell'attaccante \\ 
 		\hline
 	\end{longtable}
 \end{center}
@@ -57,7 +57,7 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 \inputminted[breaklines]{python}{../datasets/shot_logs_nv.py}
 \end{code}
 
-Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \texttt{TS}, ovvero la percentuale di successo del tiro riferito a tutta la stagione (\textit{True Shooting}), proveniente dall’altro dataset che abbiamo preso in considerazione, \textit{Seasons stats}.
+Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_previous\_game} assume il valore \texttt{TS}, ovvero la percentuale di successo del tiro riferito a tutta la stagione (\textit{True Shooting}), proveniente dall'altro dataset che abbiamo preso in considerazione, \textit{Seasons stats}.
 
 \subsection{Seasons stats}
 
@@ -101,7 +101,7 @@ Definito nel 1989 da John Hollinger:
  \end{displayquote}
 Il calcolo del suo valore è piuttosto complesso \cite{BRper}. Ulteriori informazioni ed analisi sulla rilevanza statistica di questo indicatore sono disponibili in \cite{10.1007/978-3-642-22456-0_34}.
 \par
-\textit{TS\%}, misuratore tecnico per valutare l’efficienza di tiro di un giocatore, è invece definito in \cite{BRglossary} come:
+\textit{TS\%}, misuratore tecnico per valutare l'efficienza di tiro di un giocatore, è invece definito in \cite{BRglossary} come:
 
 \begin{equation}
 TS\% = \frac{PTS}{ 2(FGA + (0.44 \times FTA))}\times100
@@ -114,19 +114,19 @@ Dove
 \item FTA (free throw attempts) sono i tiri liberi tentati.
 \end{itemize}
 
-È stata effettuata un’integrazione, descritta nella \autoref{integrazione},  affinchè ogni tiro registrato in \textit{Shot logs} avesse anche le statistiche e gli indicatori tecnici dell’attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
+È stata effettuata un'integrazione, descritta nella \autoref{integrazione},  affinchè ogni tiro registrato in \textit{Shot logs} avesse anche le statistiche e gli indicatori tecnici dell'attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
 
 \subsection{Ipotesi fatte a priori}
 
-Come per ogni altro processo statistico abbiamo innanzitutto dovuto individuare alcune ipotesi ritenute valide, assumendole tali, per poter orientare la parte di Machine Learning verso l’obbiettivo prefissato.
+Come per ogni altro processo statistico abbiamo innanzitutto dovuto individuare alcune ipotesi ritenute valide, assumendole tali, per poter orientare la parte di Machine Learning verso l'obbiettivo prefissato.
 \par
-Come fondamentale assunzione, riteniamo che l’esito del tiro a canestro possa essere dedotto in maniera abbastanza regolare dagli attributi messi a disposizione dai due dataset utilizzati. In realtà, per ogni tentato canestro giocano un’innumerevole serie di fattori fisici ed ambientali: per esempio, l’esito viene anche influenzato da come il giocatore poggia il peso poco prima di tirare.
+Come fondamentale assunzione, riteniamo che l'esito del tiro a canestro possa essere dedotto in maniera abbastanza regolare dagli attributi messi a disposizione dai due dataset utilizzati. In realtà, per ogni tentato canestro giocano un'innumerevole serie di fattori fisici ed ambientali: per esempio, l'esito viene anche influenzato da come il giocatore poggia il peso poco prima di tirare.
 \par
-Lavorando sulle performance dei giocatori dell’NBA, supponiamo anche che le loro abilità e la loro coerenza di tiro rimangano più o meno costanti (ad eccezione di poche partite sopra o sotto il loro standard, situazioni di \textit{outlier}).
+Lavorando sulle performance dei giocatori dell'NBA, supponiamo anche che le loro abilità e la loro coerenza di tiro rimangano più o meno costanti (ad eccezione di poche partite sopra o sotto il loro standard, situazioni di \textit{outlier}).
 \par
 I due dataset forniscono valori a noi utili che risalgono alla stagione di campionato 2014-2015. Volendo utilizzare i risultati per prevedere gli esiti dei tiri NBA della corrente stagione (2018-2019) dobbiamo supporre che non siano stati introdotti profondi cambiamenti nel regolamento e nelle strategie attuate dagli allenatori, affinchè le dinamiche di gioco rimangano ancora molto simili.
 \par
-Inoltre, risulterà infattibile prevedere l’esito di tiri effettuati da nuovi giocatori entrati nella lega, poichè alcune delle metriche che utilizziamo sono relative allo storico delle loro performance. 
+Inoltre, risulterà infattibile prevedere l'esito di tiri effettuati da nuovi giocatori entrati nella lega, poichè alcune delle metriche che utilizziamo sono relative allo storico delle loro performance. 
 Una possibile soluzione a questo problema è ricavare valori approssimativi per questi indici consultando altre basi di dati che contengono dati relativi alle performance del giocatore in altre leghe.
 
 \subsection{Misure di qualità dei dataset}
@@ -137,7 +137,7 @@ Vengono definiti 53 attributi per ogni giocatore. Alcuni di questi tuttavia rapp
 \par
 Innanzitutto riscontriamo una mancata correttezza rispetto al modello: gli attributi \texttt{blanl} e \texttt{blank2} sono indubbiamente campi inutili: nessuna istanza ha valori definiti per queste due colonne. Sono probabilmente refusi della fase di scraping dei dati e vanno eliminati perchè non esistenti nel modello ER e perchè intaccano la minimality del dataset.
 \par
-Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, mostrando un chiaro caso di incompletezza: sul totale di 1 283 984 valori 154 921 sono vuoti, per un’incompletezza che si attesta sullo 0.12\%.
+Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, mostrando un chiaro caso di incompletezza: sul totale di 1 283 984 valori 154 921 sono vuoti, per un'incompletezza che si attesta sullo 0.12\%.
 
 \begin{center}
 	\begin{longtable}[m]{|m{3em} m{3em} m{3em} m{3em} m{3em} m{3em} m{3em}|} 
@@ -151,11 +151,11 @@ Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, m
 	\end{longtable}
 \end{center}
 
-Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24 692. Si tratta di una chiave non molto utile per il tipo di dataset: le statistiche dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l’integrazione tra i due dataset e, se avessimo voluto fare un’integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
+Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24 692. Si tratta di una chiave non molto utile per il tipo di dataset: le statistiche dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l'integrazione tra i due dataset e, se avessimo voluto fare un'integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
 
 \subsubsection{Shot logs}
 
-Questo dataset presenta meno criticità, risultando più completo. Nonostante ciò, l’attributo \texttt{shot\_clock} presenta un’incompletezza del 4.35\%: per 5 577 istanze su 128 069 il suo valore non è specificato.
+Questo dataset presenta meno criticità, risultando più completo. Nonostante ciò, l'attributo \texttt{shot\_clock} presenta un'incompletezza del 4.35\%: per 5 577 istanze su 128 069 il suo valore non è specificato.
 Infine i valori delle colonne \texttt{player\_name} e \texttt{closest\_def} mancano di correttezza: giocatori con lo stesso id (quindi corrispondenti allo stesso giocatore) sono rappresentati con formati e capitalizzazioni diverse: \texttt{player\_name} infatti il segue il formato \texttt{Cognome, Nome} con le iniziali maiuscole, mentre in \texttt{closest\_def} il formato è \texttt{nome cognome} tutto in minuscolo. È un caso di eterogeneità a livello di istanze.
 
 \par
