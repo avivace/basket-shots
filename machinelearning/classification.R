@@ -16,7 +16,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-#dataset = head(dataset, 10000)
+dataset = head(dataset, 10000)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -58,11 +58,11 @@ split.data = function(data, p = 0.7, s = 1) {
   return(list(train=train, test=test))
 }
 
+# Train model
 allset = split.data(dataset, p = 0.8, s = 1)
 trainset= allset$train
 testset= allset$test
 
-# Train model
 model=fit(shot_result~.,trainset,model="ksvm", task="prob", kernel="rbfdot", C=1)
 # Importance
 I = Importance(model, trainset, method="1D-SA")
@@ -87,13 +87,31 @@ print(metrics)
 auc=mmetric(testset$shot_result,prediction,metric=c("AUC"))
 print(auc) # confusion matrix
 
-# ROC
+m=mmetric(testset$shot_result,prediction,metric=c("ROC"))
+print(m) 
+
+#AUC 1 CALCULATION
+tmp1 = m$roc$roc[,1] * 0.0005
+auc1 = sum(tmp1) 
+print(auc1)
+
+#AUC 2 CALCULATION
+tmp2 = m$roc$roc[,2] * 0.0005
+auc2 = sum(tmp2) 
+print(auc2)
+
+plot(x = seq(0, 1, by = 0.0005), y = m$roc$roc[,1], type="l")
+plot(x = seq(0, 1, by = 0.0005), y = m$roc$roc[,2], type="l")
+  # ROC
+txt=paste(levels(testset$shot_result)[1],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=1),2))
+mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-made")
 txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=2),2))
-mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-1")
+mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-missed")
+
 
 # Cross validation
 valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
-                       task="prob", model="ksvm", kernel="rbfdot", c=1)
+                       task="prob", model="ksvm", kernel="rbfdot", C=1)
 metrics=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ALL"))
 print(metrics)
 auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
