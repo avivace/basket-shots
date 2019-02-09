@@ -16,7 +16,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 15000)
+dataset = head(dataset, 25000)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -62,6 +62,7 @@ split.data = function(data, p = 0.7, s = 1) {
 allset = split.data(dataset, p = 0.8, s = 1)
 trainset= allset$train
 testset= allset$test
+
 
 model=fit(shot_result~.,trainset,model="ksvm", task="prob", kernel="rbfdot", C=1)
 # Importance
@@ -120,6 +121,8 @@ valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10,
                        task="prob", model="ksvm", kernel="rbfdot", C=1)
 metrics=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ALL"))
 print(metrics)
+print(model@mpar)
+print(model@time)
 auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
 print(auc)
 txt=paste(levels(dataset$shot_result)[2],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=2),2))

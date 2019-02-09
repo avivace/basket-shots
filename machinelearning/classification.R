@@ -2,6 +2,7 @@ set.seed(123)
 setwd('~/github/basket-shots/datasets/')
 library(rminer)
 library(ggplot2)
+library(doParallel)
 
 # Import dataset
 dataset = read.csv('shots_att_def_stats.csv', sep=",", fileEncoding="latin1")
@@ -16,7 +17,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 10000)
+dataset = head(dataset, 25000)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -63,20 +64,19 @@ allset = split.data(dataset, p = 0.8, s = 1)
 trainset= allset$train
 testset= allset$test
 
+# Speed up (?)
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
 model=fit(shot_result~.,trainset,model="ksvm", task="prob", kernel="rbfdot", C=1)
-# Importance
-I = Importance(model, trainset, method="1D-SA")
-print(round(I$imp,digits=2))
-features = c(colnames(dataset))
-print(features)
-importance = round(I$imp, digits=2)
-imp_feats = data.frame(features, importance)
-imp_feats = imp_feats[with(imp_feats, order(-importance, features)), ]
-importance_f = ggplot(imp_feats, aes(x=features, y=importance)) +
-  geom_bar(stat='identity') + theme(text = element_text(size=15)) +
-  coord_flip() #+ scale_x_discrete(limits = features)
+stopCluster(cl)
+print(model@time)
 
-ggsave(file="importance.pdf", plot=importance_f, width=10)
+# Importance
+I=Importance(model, trainset)
+imax=which.max(I$imp)
+L=list(runs=1,sen=t(I$imp),sresponses=I$sresponses) # create a simple mining list
+par(mar=c(2.0,2.0,2.0,2.0)) # enlarge PDF margin
+mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance")
 
 # Print model parameters
 print(model@mpar)
@@ -90,19 +90,7 @@ print(auc) # confusion matrix
 m=mmetric(testset$shot_result,prediction,metric=c("ROC"))
 print(m) 
 
-#AUC 1 CALCULATION
-tmp1 = m$roc$roc[,1] * 0.0005
-auc1 = sum(tmp1) 
-print(auc1)
-
-#AUC 2 CALCULATION
-tmp2 = m$roc$roc[,2] * 0.0005
-auc2 = sum(tmp2) 
-print(auc2)
-
-plot(x = seq(0, 1, by = 0.0005), y = m$roc$roc[,1], type="l")
-plot(x = seq(0, 1, by = 0.0005), y = m$roc$roc[,2], type="l")
-  # ROC
+# ROC
 txt=paste(levels(testset$shot_result)[1],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=1),2))
 mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-made")
 txt=paste(levels(testset$shot_result)[2],"AUC:",round(mmetric(testset$shot_result,prediction,metric="AUC",TC=2),2))
@@ -110,12 +98,35 @@ mgraph(testset$shot_result,prediction,graph="ROC",baseline=TRUE,Grid=10,main=txt
 
 
 # Cross validation
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
 valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
                        task="prob", model="ksvm", kernel="rbfdot", C=1)
+stopCluster(cl)
+
+# Importance
+I=Importance(model, dataset)
+imax=which.max(I$imp)
+L=list(runs=1,sen=t(I$imp),sresponses=I$sresponses) # create a simple mining list
+par(mar=c(2.0,2.0,2.0,2.0)) # enlarge PDF margin
+mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance")
+
+# Print results
+print(valdata$cv.fit)
+print(valdata$mpar)
+
+# Metrics and confusion matrix
 metrics=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ALL"))
 print(metrics)
+conf_matrix = mmetric(dataset$shot_result,valdata$cv.fit,metric=c("CONF"))
+print(conf_matrix)
+
+# AUC and ROC
 auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
 print(auc)
 txt=paste(levels(dataset$shot_result)[2],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=2),2))
-mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-svm")
+mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=2,PDF="roc-svm-missed")
+
+txt=paste(levels(dataset$shot_result)[1],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=1),2))
+mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-svm-made")
 
