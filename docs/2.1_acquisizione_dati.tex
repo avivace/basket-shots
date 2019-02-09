@@ -94,20 +94,23 @@ Nel caso in cui la partita sia la prima della stagione, \texttt{percentage\_prev
 
 	\end{longtable}
 \end{center}
-\textit{PER} è indicatore tecnico per valutare la bravura di un giocatore. Definito nel 1989 da John Hollinger
+\textit{PER} è indicatore tecnico che mira a riassumere diversi fattori che descrivono la performance di un giocatore in un unico valore.
+Definito nel 1989 da John Hollinger:
 \begin{displayquote}
  The PER sums up all a player's positive accomplishments, subtracts the negative accomplishments, and returns a per-minute rating of a player's performance. 
  \end{displayquote}
-Il calcolo del suo valore è piuttosto complesso \cite{BRper}.
+Il calcolo del suo valore è piuttosto complesso \cite{BRper}. Ulteriori informazioni ed analisi sulla rilevanza statistica di questo indicatore sono disponibili in \cite{10.1007/978-3-642-22456-0_34}.
 \par
 \textit{TS\%}, misuratore tecnico per valutare l’efficienza di tiro di un giocatore, è invece definito in \cite{BRglossary} come:
 
 $$TS\% = \frac{PTS}{ 2(FGA + (0.44 \times FTA))}\times100$$
 
-Dove \\
-PTS = points scored,\\
-FGA = field goal attempts,\\
-FTA = free throw attempts. \\
+Dove
+\begin{itemize}
+\item PTS (points scored) è il punteggio ottenuto,
+\item FGA (field goal attempts) sono i tentativi di tiro dal campo (da 2 o da 3 punti),
+\item FTA (free throw attempts) sono i tiri liberi tentati.
+\end{itemize}
 
 È stata effettuata un’integrazione, descritta nella \autoref{integrazione},  affinchè ogni tiro registrato in \textit{Shot logs} avesse anche le statistiche e gli indicatori tecnici dell’attaccante (colui che effettua il tiro) e del difensore (colui che attua il blocco per ostacolare il tiro). Dopodichè abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè gli algoritmi di Machine Learning considerino e prevedano i risultati indipendentemente dai giocatori coinvolti, basandosi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
 
