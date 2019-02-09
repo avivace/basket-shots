@@ -62,7 +62,9 @@ public static String matchNames(String name1) {
 Un aspetto importante dei dati coinvolti nel nostro processo di integrazione è il loro cambiamento nel tempo. I database a nostra disposizione contemplano l’anno di campionato 2014-2015 ma è ovvio che questi vengano continuamente aggiornati e integrati con il corso dei campionati.
 
 \textit{Currency}, definita come la velocità degli aggiornamenti \cite{batini2006}, è calcolabile con la seguente formula\cite{doi:10.1287/mnsc.44.4.462}
-$$Currency = Age + (DeliveryTime - InputTime)$$
+\begin{equation}
+Currency = Age + (DeliveryTime - InputTime)
+\end{equation}
 \textit{Age} misura l'età dei dati quando vengono ricevuti, \textit{DeliveryTime} è l'istante in cui il prodotto che utilizza queste informazioni è consegnato all'utente finale mentre \textit{InputTime} è l'istante in cui il dato è stato effettivamente ottenuto.
 Il termine $(DeliveryTime - InputTime)$ misura quindi il periodo di tempo che trascore prima che il prodotto che utilizza i nostri dati sia pronto ed effettivamente utilizzabile.
 
@@ -72,7 +74,9 @@ Supponendo inoltre che le statistiche dell’NBA rimangano rilevanti per le 3 st
 
 \textit{Timeliness}, calcolata con 
 
-$$\max\{{0, 1 - \frac{Currency}{Volatility}}\}$$
+\begin{equation}
+\max\{{0, 1 - \frac{Currency}{Volatility}}\}
+\end{equation}
 
 Vale quindi 0, rappresentando una cattiva tempestività del nostro dataset.
 
@@ -87,7 +91,9 @@ Consideriamo una funzione $C(t)$, definita come il valore della completezza all'
 
 La \textit{completabilità} dei dati è quindi definibile come \cite{batini2006}:
 
-$$\int_{t_{curr}}^{t_{max}} C(t)$$
+\begin{equation}
+\int_{t_{curr}}^{t_{max}} C(t)
+\end{equation}
 
 Con $t_{curr}$ l'instante in cui essa viene calcolata ($t_{curr} < t_{max}$).
 
@@ -113,7 +119,10 @@ Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, i
 	\item Il ritardo con cui otteniamo i dati sulle partite appena avvenute sia trascurabile, i.e. ad un istante $t$ si abbiano i dati delle partite fino a $t-1$;
 \end{itemize}
 	% TODO: DECIDERE SE USARE %
-	La completezza dei dati, in un istante \textit{t}, è stimabile con $$ C(t) = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100 $$
+	La completezza dei dati, in un istante \textit{t}, è stimabile con 
+	\begin{equation}
+	C(t) = \frac{\sum\limits_{y=c-p-1}^{c-1} M_{y} + m_{c,t}}{\sum\limits_{y=c-p-1}^{c} M_{y}} \times 100
+	\end{equation}
 	Dove \begin{itemize}
 		\item $M_y$ è il numero totale di partite nella stagione $y$;
 		\item $m_{c,t}$ il numero totale di partite nella stagione $y$ fino all'istante $t$;

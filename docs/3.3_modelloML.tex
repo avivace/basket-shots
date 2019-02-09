@@ -35,5 +35,6 @@ Aggiungendo alla funzione fit il parametro \texttt{search="heuristic10"} consent
 Dopo una ricerca euristica su un sample di 25000 istanze, le metriche più accurate sono state ottenute con il valore C della SVM uguale a 1 e kernel \textit{RBFDOT} ossia Radial Basis Function Kernel.
 \par
 La funzione di discriminazione di tale Kernel è:
-
-$$y\left(\mathbf{x}\right) = \sum_{i=1}^N w_i \, \phi\left(\left\|\mathbf{x} - \mathbf{x}_i\right\|\right)\label{RBFK}$$
+\begin{equation}
+y\left(\mathbf{x}\right) = \sum_{i=1}^N w_i \, \phi\left(\left\|\mathbf{x} - \mathbf{x}_i\right\|\right)\label{RBFK}
+\end{equation}
