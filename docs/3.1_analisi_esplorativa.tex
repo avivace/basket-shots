@@ -1,6 +1,7 @@
-La fase di Data integration è stata impostata in modo tale da produrre un dataset pulito e direttaemnte sottoponibile ad un modello di Machine Learning.
+%INTRO
+La scelta del modello di machine learning da utilizzare è in gran parte determinata dalle caratteristiche dei dati a disposizione.
 
-Gli attributi relativi ai nomi degli atleti, resi necessari dalla mancanza di un ID univoco, vengono rimossi dopo aver effettuato l'integrazione.
+Iniziamo dunque con un analisi del dataset a disposizione per individuare le caratteristiche che abbiamo a disposizione e in che modo i valori che assumono sono distribuiti nelle nostre istanze.
 
 \section{Analisi esplorativa}
 
@@ -69,3 +70,10 @@ Al contrario, gli altri tre ruoli (PG, SF e SF) tirano da una distanza che si ag
 
 La \autoref{position_shots} conferma questa intepretazione: PF ha una percentuale di missed pari a 0.53, mentre addirittura inferiore (0.49) è la la percentuale di missed per C, per di più l'unico ruolo ad avere un numero di tiri made maggiori rispetto ai missed ma anche quello con il minor numero di tiri effettuati.
 Gli altri tre ruoli (PG, SF, SG) hanno una percentuale di missed pari a 0.57.
+
+\section{Scelta del modello}
+% Scelta di C (complexity paramater) e Sigma (gaussian kernel parameter)
+
+Il nostro dataset integrato ha un buon numero di attributi, sia numerici che categorici.
+Abbiamo quindi deciso di utilizzare SVM, un algoritmo di apprendimento automatico supervisionato ampiamente utilizzato per problemi di classificazione. Il suo punto di forza è l'utilizzo del cosiddetto \textit{kernel trick}, strumento matematico per mappare l'input in uno spazio multi-dimensionale. SVM performa bene con dataset composti da tanti attributi e numerose osservazioni, adeguato sotto questo punto di vista al nostro caso.
+La presenza di attributi categorici porterebbe a preferire gli alberi di decisione, ma esistono alcune tecniche che possono trasformare queste tipologie di campi affinchè siano compatibili anche con le SVM.
