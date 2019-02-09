@@ -5,12 +5,25 @@ Nonostante gli aspetti positivi, è difficile determinare se la SVM sia la tecni
 %%
 Inizialmente abbiamo provato ad implementare SVM con il package R \texttt{e1071}, ma il dataset utilizzato contiene un numero eccessivo di istanze e la computazione risultava troppo onerosa (\texttt{cannot allocate vector in R of size xx Gb}). Abbiamo sperimentato anche con il package \texttt{liquidSVM} ma non erano presenti di default funzionalità utili allo sviluppo del progetto come il calcolo della \textit{ROC} e \textit{AUC}, quindi abbiamo optato per il package \texttt{rminer} che implementa l’algoritmo della SVM di Kernlabs, basato sul lavoro di John Platt \cite{Platt99probabilisticoutputs} in cui viene descritto il metodo ad oggi più efficiente per ottenere stime probabilistiche sulla classificazione del test set con una SVM.
 
-\subsubsection{Creazione del training set}
+Dividiamo l'intero dataset in training e test set con questa funzione R:
 
-Una volta importato e suddiviso il dataset per l’apprendimento automatico, la seguente riga produce e allena il modello:
+\begin{minted}{r}
+# Split dataset helper function
+split.data = function(data, p = 0.8, s = 1) {
+  set.seed(s)
+  index = sample(1:dim(data)[1])
+  train = data[index[1:floor(dim(data)[1] * p)], ]
+  test = data[index[((ceiling(dim(data)[1] * p)) + 1):dim(data)[1]], ]
+  return(list(train=train, test=test))
+}
+\end{minted}
 
-\texttt{}
+La seguente riga produce e allena il modello:
 
+\begin{minted}{r}
+model=fit(shot_result~., trainset, model="ksvm", task="prob", 
+          kernel="rbfdot", C=1)
+\end{minted}
 
 Ricordiamo che SVM un valore $ f(z) $ per ogni istanza di test $z$
 
@@ -28,7 +41,7 @@ $$\hat{y}(z) = \Theta(f(z))$$
 
 Per ottenere $f(z)$ e non direttamente $\Theta(f(z))$, imposteremo il modello per eseguire il task \textit{prob} invece del predefinito \textit{class}, anche se il nostro è un problema di classificazione.
 
-In questo modo, $f(z)$ viene automaticamente scalato in un range $[0, 1]$ con la tecnica chiamata \textit{Platt scaling} \cite{Platt99probabilisticoutputs}, producendo quindi una stima della probabilità di classificazione.
+In questo modo, $f(z)$ da numero reale viene scalato in un intervallo $[0, 1]$ con la tecnica chiamata \textit{Platt scaling} \cite{Platt99probabilisticoutputs}, producendo quindi una stima della probabilità di classificazione.
 \par
 Aggiungendo alla funzione fit il parametro \texttt{search="heuristic10"} consentiamo la ricerca semiautomatica degli iperparametri ottimali su 10 range diversi per massimizzare la predizione del modello.
 \par
