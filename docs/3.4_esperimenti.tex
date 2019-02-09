@@ -1,0 +1,59 @@
+\section{Esperimenti e analisi dei risultati}
+
+L'esecuzione della cross validation su SVM ha riportato le seguenti metriche:
+
+\begin{itemize}
+	\item Accuracy complessiva -> xx
+	\item Precision per la classe \textit{made} -> xx
+	\item Precision per la classe \textit{missed} -> xx
+	\item Recall per la classe \textit{made} -> xx
+	\item Recall per la classe \textit{missed} -> xx
+	\item F-measure per la classe \textit{made} -> xx
+	\item F-measure per la classe \textit{missed} -> xx
+	\item Area Under Curve per la classe \textit{made} -> xx
+	\item Area Under Curve per la classe \textit{missed} -> xx
+	\item Area Under Curve complessiva -> xx
+
+\end{itemize}
+
+Queste metriche sono state calcolate direttamente dalla seguente matrice di confusione:
+
+\usepackage{graphicx}
+\usepackage{multirow}
+
+\newcommand\MyBox[2]{
+  \fbox{\lower0.75cm
+    \vbox to 1.7cm{\vfil
+      \hbox to 1.7cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+      \vfil}%
+  }%
+}
+
+\noindent
+\renewcommand\arraystretch{1.5}
+\setlength\tabcolsep{0pt}
+\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
+  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering actual\\ value}}} & 
+    & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
+  & & \bfseries p & \bfseries n & \bfseries total \\
+  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
+  & total & P & N &
+\end{tabular}
+
+\par
+Il risultato, intuitivamente un po’ basso, è in realtà in linea con le aspettative: come già anticipato nella sezione 3.1, le circostanze che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al random guessing dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
+
+\par
+Dalle metriche ottenute possiamo fare alcune valutazioni: dai valori di precision molto vicini tra loro deduciamo che il numero di falsi positivi per entrambe le classi è simile ed inferiore al 60\%.
+% TO DO: false positive per made e false negative per missed?
+Guardando le recall invece notiamo che per la classe \textit{missed} tendono ad esserci pochi falsi negativi, mentre la vera criticità è il numero molto alto di falsi negativi per \textit{made}. In altre parole, un tiro legittimo tende ad essere considerato un fallimento.
+
+Le F-measure sono valori che permettono di confrontare direttamente le due classi. Precision e recall sono spesso diverse e quindi è complicato determinare quale classe abbia effettivamente meno errori: la F-measure, ottenuta computando la media armonica di queste due metriche, permette di quantificare le performance delle due classi in maniera comparabile. Nel nostro caso era deducibile che la f-measure di “missed” fosse molto più alta di quella di “made”: la disparità nelle recall influisce molto sul calcolo complessivo.
+
+\par
+Sia eseguendo SVM sull'intero dataset, diviso opportunamente in training set (80\%) e trainset (il restante 20\%), sia eseguendolo con una 10-fold cross validation, il valore di accuracy complessivo tra le due esecuzioni non si discosta troppo. Ciò porta a concludere che il dataset è formato da istanze poco sofferenti di bias e difficilmente rischia di andare in overfitting.
+
+\par
+Non essendo completamente soddisfatti dal livello di accuracy ottenuto, abbiamo eseguito una ricerca estensiva per verificare la possibile presenza di errori nella realizzazione del modello. In questo frangente abbiamo trovato un paper di Stanford in cui, usando il solo dataset \texttt{shot logs}, gli accademici hanno raggiunto con modelli alternativi un massimo di 66\% di accuracy, convalidando indirettamente il nostro lavoro con la SVM (LINKARE PAPER MOTHERFUCKER!).
+% Fonte che il lavoro fatto da Stanford sia corretto: COPPOLA
