@@ -10,8 +10,9 @@
 \usepackage{wrapfig}
 \usepackage{setspace}
 \usepackage{amsthm}
-% Allow include SVGs, converting them with Inkscape
+% Allow including SVGs, converting them with Inkscape
 \usepackage{svg}
+% probably not needed with xelatex engine
 %\usepackage[utf8]{inputenc}
 % Allows setting fixed width in tables columns
 \usepackage{array}
@@ -29,6 +30,9 @@
 \usepackage{csquotes}
 % Force figure placement
 \usepackage{float}
+% Boh, lo usa luca
+\usepackage{multirow}
+
 
 % Translate autoref names
 \renewcommand{\sectionautorefname}{sezione}
@@ -38,7 +42,7 @@
 % Translate captions
 \renewcommand\listingscaption{Listato}
 \renewcommand{\figurename}{Figura}
-\renewcommand{\bibname}{Bibliografia}
+\renewcommand{\bibname}{Riferimenti}
 \renewcommand\tablename{Tabella}
 \newenvironment{code}{\captionsetup{type=listing}}{}
 \renewcommand{\contentsname}{Indice}
@@ -62,6 +66,14 @@
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray90}{|}\hsp}{0pt}{\Huge\bfseries}
 \newcommand{\hsp}{\hspace{10pt}}
 
+% Confusion matrix preset
+\newcommand\MyBox[2]{
+  \fbox{\lower0.75cm
+    \vbox to 1.7cm{\vfil
+      \hbox to 1.7cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+      \vfil}%
+  }%
+}
 
 \begin{document}
 
@@ -95,8 +107,9 @@
 
 \chapter{Machine Learning}
 \input{3.1_analisi_esplorativa}
-\input{3.2_creazione_training_set}
-\input{3.3_modelli_utilizzati}
+\input{3.2_preparazione_dataset}
+\input{3.3_modelloML}
+\input{3.4_esperimenti}
 
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
