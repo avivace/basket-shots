@@ -1,7 +1,9 @@
 \section{Implementazione del modello}
 
+%% forse questo pezzo andrebbe meglio altrove/conclusioni?
 Nonostante gli aspetti positivi, è difficile determinare se la SVM sia la tecnica ideale per allenare il nostro dataset. Non abbiamo individuato un fattore discriminante che porti a preferirla rispetto ad altri modelli come le reti neurali oppure gli alberi di decisione.
-Inizialmente abbiamo provato ad implementare la SVM con il package R \texttt{e1071}, ma il dataset utilizzato contiene un numero eccessivo di istanze e la computazione risultava troppo onerosa (\texttt{cannot allocate vector in R of size xx Gb}). Abbiamo sperimentato anche con il package \texttt{liquidSVM} ma non erano presenti di default funzionalità utili allo sviluppo del progetto come il calcolo della \textit{ROC} e \textit{AUC}, quindi abbiamo optato per il package \texttt{rminer} che implementa l’algoritmo della SVM di Kernlabs, basato sul paper di Platt \cite{Platt99probabilisticoutputs} in cui viene descritto il metodo ad oggi più efficiente per ottenere stime probabilistiche sulla classificazione del test set con una SVM.
+%%
+Inizialmente abbiamo provato ad implementare SVM con il package R \texttt{e1071}, ma il dataset utilizzato contiene un numero eccessivo di istanze e la computazione risultava troppo onerosa (\texttt{cannot allocate vector in R of size xx Gb}). Abbiamo sperimentato anche con il package \texttt{liquidSVM} ma non erano presenti di default funzionalità utili allo sviluppo del progetto come il calcolo della \textit{ROC} e \textit{AUC}, quindi abbiamo optato per il package \texttt{rminer} che implementa l’algoritmo della SVM di Kernlabs, basato sul lavoro di John Platt \cite{Platt99probabilisticoutputs} in cui viene descritto il metodo ad oggi più efficiente per ottenere stime probabilistiche sulla classificazione del test set con una SVM.
 
 \subsubsection{Creazione del training set}
 
@@ -10,21 +12,28 @@ Una volta importato e suddiviso il dataset per l’apprendimento automatico, la 
 \texttt{}
 
 
-Sebbene il nostro sia un problema di classificazione, settare il parametro task a \textit{prob} ci permette di ottenere dal modello il valore $ f(z) $ calcolato per ogni istanza di test $z$, piuttosto che il risultato della funzione scalino $\theta(f(z))$ che indica una posizione minore o maggiore rispetto alla threshold, determinando la classe di appartenenza:
+Ricordiamo che SVM un valore $ f(z) $ per ogni istanza di test $z$
 
-% f(z)=wTϕ(z)+b,=∑i∈SVαiyiκ(xi,z)+b 
+\begin{align}
+f(\mathbf{z}) &= \mathbf{w}^T\phi(\mathbf{z}) + b, \\
+&= \sum_{i\in SV} \alpha_i y_i \kappa(\mathbf{x}_i,\mathbf{z}) + b.
+\end{align}
 
-%(https://stats.stackexchange.com/questions/134156/can-i-use-svm-classification-probability-for-ranking)
+Il risultato è un numero reale 
+$$f(\cdot):\mathbb{R}^d \mapsto \mathbb{R}$$
 
+Per ottenere etichette binarie utilizzando la soglia predefinita, viene applicata la funzione scalino (o Heaviside) su quest'ultimo:
 
-Con task uguale \textit{prob} il valore $f(z)$ viene automaticamente scalato in un range $[0, 1]$ con la tecnica chiamata \textit{Platt scaling}, producendo quindi una stima della probabilità di classificazione.
-Aggiungendo alla funzione fit il seguente parametro \texttt{search="heuristic10"}
+$$\hat{y}(z) = \Theta(f(z))$$
 
-consentiamo la ricerca semiautomatica degli iperparametri ottimali su 10 range diversi per massimizzare la predizione del modello.
+Per ottenere $f(z)$ e non direttamente $\Theta(f(z))$, imposteremo il modello per eseguire il task \textit{prob} invece del predefinito \textit{class}, anche se il nostro è un problema di classificazione.
 
-Dopo una ricerca euristica su un sample di 25000 istanze, le metriche più accurate sono state ottenute con il valore C della SVM uguale 1 e kernel “RBFDOT” ossia Radial Basis Function Kernel.
+In questo modo, $f(z)$ viene automaticamente scalato in un range $[0, 1]$ con la tecnica chiamata \textit{Platt scaling} \cite{Platt99probabilisticoutputs}, producendo quindi una stima della probabilità di classificazione.
+\par
+Aggiungendo alla funzione fit il parametro \texttt{search="heuristic10"} consentiamo la ricerca semiautomatica degli iperparametri ottimali su 10 range diversi per massimizzare la predizione del modello.
+\par
+Dopo una ricerca euristica su un sample di 25000 istanze, le metriche più accurate sono state ottenute con il valore C della SVM uguale a 1 e kernel \textit{RBFDOT} ossia Radial Basis Function Kernel.
+\par
 La funzione di discriminazione di tale Kernel è:
-Formula di 
 
-%https://it.wikipedia.org/wiki/Funzione_radiale_di_base
-
+$$y\left(\mathbf{x}\right) = \sum_{i=1}^N w_i \, \phi\left(\left\|\mathbf{x} - \mathbf{x}_i\right\|\right)\label{RBFK}$$
