@@ -22,7 +22,7 @@ model=fit(shot_result~., trainset, model="ksvm", task="prob",
           kernel="rbfdot", C=1)
 \end{minted}
 
-Ricordiamo che SVM un valore $ f(z) $ per ogni istanza di test $z$
+Ricordiamo che SVM ha un valore $ f(z) $ per ogni istanza di test $z$
 
 \begin{align}
 f(\mathbf{z}) &= \mathbf{w}^T\phi(\mathbf{z}) + b, \\
