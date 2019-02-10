@@ -1,8 +1,54 @@
+\pagebreak
 \section{Esperimenti e analisi dei risultati}
 
-Dopo una semplice esecuzione di una SVM abbiamo ottenuto le seguenti metriche:
+Il comando \textit{mmetric} ci permette di ottenere metriche e stime di performance sul nostro modello:
+\begin{minted}{r}
+metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
+\end{minted}
 
-\begin{table}[h!]
+%TODO: aggiungere valori
+\begin{table}[H]
+\centering
+  \begin{tabular}{l l} 
+  Accuracy complessiva & xx\\
+  Precision per la classe \textit{made} & xx\\
+  Precision per la classe \textit{missed} & xx\\
+  Recall per la classe \textit{made} & xx\\
+  Recall per la classe \textit{missed} & xx\\
+  F-measure per la classe \textit{made} & xx\\
+  F-measure per la classe \textit{missed} & xx\\
+  Area Under Curve complessiva & xx\\
+    \end{tabular}
+    \caption{Metriche del modello SVM}
+\end{table}
+
+\begin{table}[H]
+
+%TODO: aggiungere valori
+\centering
+\noindent
+\renewcommand\arraystretch{1.5}
+\setlength\tabcolsep{0pt}
+\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
+\centering
+  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
+    & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
+  & & \bfseries p & \bfseries n & \bfseries total \\
+  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
+  & total & P & N &
+\end{tabular}
+ \caption{Confusion Matrix di SVM}
+ \label{confusion_matrix_svm}
+\end{table}
+
+\pagebreak
+
+
+L'esecuzione della Cross Validation non migliora molto questi risultati:
+
+%TODO: aggiungere valori
+\begin{table}[H]
 \centering
   \begin{tabular}{l l} 
   Accuracy complessiva & xx\\
@@ -17,10 +63,9 @@ Dopo una semplice esecuzione di una SVM abbiamo ottenuto le seguenti metriche:
     \caption{Metriche risultate dell'esecuzione della cross validation su SVM}
 \end{table}
 
-Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_svm}.
+\begin{table}[H]
 
-\begin{table}
-
+%TODO: aggiungere valori
 \centering
 \noindent
 \renewcommand\arraystretch{1.5}
@@ -34,12 +79,12 @@ Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matri
   & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
   & total & P & N &
 \end{tabular}
- \caption{Confusion Matrix}
- \label{confusion_matrix_svm}
+ \caption{Confusion Matrix di SVM dopo la cross validation}
+ \label{confusion_matrix_svm_cv}
 \end{table}
 
-\par
-Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: come già anticipato nella sezione 3.1, i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
+
+Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
 
 \par
 % to do: verificare correttezza
@@ -59,7 +104,7 @@ Per verificare come si comportassero altri modelli diversi dalla SVM, abbiamo da
 Innanzitutto è stata eseguita un'euristica per individuare il valore migliore di CP, ossia quello con “xerror” minimo. Questo parametro indica di quanto debba migliorare il relative error complessivo per poter eseguire uno split nel nodo dell'albero.
 Il risultato però è stato un albero con un solo split:
 
-\begin{figure}
+\begin{figure}[H]
 \caption{Alberi di decisioni}
 \label{dt_fig}
   \includegraphics[width=\linewidth]{DECISIONTREE}
