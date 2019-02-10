@@ -50,7 +50,7 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 	\end{longtable}
 \end{center}
 
-\texttt{percentage\_previous\_game} è una nuova feature che abbiamo computato dai dati esistenti. Rappresenta la percentuale di successo del tiro fino a quel momento in stagione. Il suo valore è stato ottenuto il seguente script Python che, facendo uso della libreria \textit{Pandas}, aggrega i dati delle partite precedenti a quella a cui si riferisce il tiro in questione.
+\texttt{percentage\_previous\_game} è una nuova feature che abbiamo computato dai dati esistenti. Rappresenta la percentuale di successo del tiro fino a quel momento in stagione. Il suo valore è stato ottenuto dal seguente script Python che, facendo uso della libreria \textit{Pandas}, aggrega i dati delle partite precedenti a quella a cui si riferisce il tiro in questione.
 
 \begin{code}
 \captionof{listing}{\texttt{datasets/shot\_logs\_nv.py}}
@@ -118,7 +118,7 @@ Dove
 
 \par
 
-Abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè il modello di di Machine Learning prevedano i risultati indipendentemente dai giocatori coinvolti, ma si basino sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
+Abbiamo scelto di rendere anonime le istanze del nuovo dataset rimuovendo nomi di attaccanti e difensori, cosicchè il modello di Machine Learning preveda i risultati indipendentemente dai giocatori coinvolti, e si basi sulle loro statistiche, sul contesto di gioco e sugli altri valori forniti.
 
 \subsection{Ipotesi fatte a priori}
 
