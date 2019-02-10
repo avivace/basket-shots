@@ -62,7 +62,13 @@ Non essendo completamente soddisfatti dal livello di accuracy ottenuto, abbiamo 
 Per verificare come si comportassero altri modelli diversi dalla SVM, abbiamo dato in input il nostro dataset e abbiamo allenato un modello sfruttando la tecnica del Decision Tree.
 Innanzitutto è stata eseguita un’euristica per individuare il valore migliore di CP, ossia quello con “xerror” minimo. Questo parametro indica di quanto debba migliorare il relative error complessivo per poter eseguire uno split nel nodo dell'albero.
 Il risultato però è stato un albero con un solo split:
-IMMAGINE ALBERO
+
+\begin{figure}
+\caption{Alberi di decisioni}
+\label{dt_fig}
+  \includegraphics[width=\linewidth]{DECISIONTREE}
+\end{figure}
+
 
 Un’analisi delle metriche ci mostra il perchè di un albero così corto:
 
