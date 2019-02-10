@@ -88,6 +88,7 @@ Un’analisi delle metriche ci mostra il perchè di un albero così corto:
 
 Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_dt}.
 
+
 \begin{table}
 
 \centering
@@ -99,24 +100,27 @@ Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matri
   \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
     & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
   & & \bfseries p & \bfseries n & \bfseries total \\
-  & p$'$ & \MyBox{20 639} & \MyBox{37 162} & P$'$ \\[2.4em]
-  & n$'$ & \MyBox{12 587} & \MyBox{57 357} & N$'$ \\
+  & p$'$ & \MyBox{20 639}{} & \MyBox{37 162}{} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{12 587}{} & \MyBox{57 357}{} & N$'$ \\
   & total & P & N &
 \end{tabular}
- \caption{Confusion Matrix}
+ \caption{Confusion Matrix di DT}
  \label{confusion_matrix_dt}
 \end{table}
 
 
-Variables actually used in tree construction:
-[1] shot\_dist
-Variables importance:
-shot\_dist 77
-shot\_clock 8
-touch\_time 8
-close\_def\_distance 7
-percentage\_prev\_games 1
 
+\begin{table}[h!]
+\centering
+  \begin{tabular}{l l} 
+shot\_dist &77\\
+shot\_clock &8\\
+touch\_time &8\\
+close\_def\_distance &7\\
+percentage\_prev\_games &1\\
+    \end{tabular}
+    \caption{Importance in DT}
+\end{table}
 
 L’importance di shot\_dist è nettamente più alta di qualsiasi altro attributo.
 Questi valori dimostrano che il decision tree non è adeguato per il nostro problema in quanto non coinvolge attributi che per noi sono influenti e probabilmente generalizzerà male con istanze nuove.
