@@ -54,9 +54,6 @@ Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione
 \par
 Sia eseguendo SVM sull'intero dataset, diviso opportunamente in training set (80\%) e trainset (il restante 20\%), sia eseguendolo con una 10-fold cross validation, il valore di accuracy complessivo tra le due esecuzioni non si discosta troppo. Ciò porta a concludere che il dataset è formato da istanze poco sofferenti di bias e difficilmente rischia di andare in overfitting.
 
-\par
-Non essendo completamente soddisfatti dal livello di accuracy ottenuto, abbiamo cercato lavori analoghi al nostro per confrontare e verificare la possibile presenza di errori nella realizzazione del modello. \cite{predictingNBAst} fa un percorso analogo al nostro partendo dallo stesso datasets \textit{Shot logs}, confrontando più algoritmi e raggiungendo un'accuratezza  68\% utilizzando \textit{XGBoost}, un'implementazione di \textit{Boosting}. È un approccio che coinvolge diversi classificatori \textit{weak learners} e infine, ne combina le predizioni, pesate differentemente, con un ulteriore algoritmo di apprendimento artificiale (\textit{strong learner}).
-
 \subsection{Alberi di Decisione}
 Per verificare come si comportassero altri modelli diversi dalla SVM, abbiamo dato in input il nostro dataset e abbiamo allenato un modello sfruttando la tecnica del Decision Tree.
 Innanzitutto è stata eseguita un’euristica per individuare il valore migliore di CP, ossia quello con “xerror” minimo. Questo parametro indica di quanto debba migliorare il relative error complessivo per poter eseguire uno split nel nodo dell'albero.
