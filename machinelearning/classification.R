@@ -17,7 +17,7 @@ dataset = dataset[dataset$touch_time >= 0,]
 dataset = dataset[-c(1, 2)]
 
 # Use *only* the first X entries
-dataset = head(dataset, 500)
+dataset = head(dataset, 40000)
 
 # Scaling dataset 
 performScaling <- TRUE  # Turn it on/off for experimentation.
@@ -75,8 +75,8 @@ print(model@time)
 I=Importance(model, trainset)
 imax=which.max(I$imp)
 L=list(runs=1,sen=t(I$imp),sresponses=I$sresponses) # create a simple mining list
-par(mar=c(2.0,2.0,2.0,2.0)) # enlarge PDF margin
-mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance")
+# par(mar=c(2.0,2.0,2.0,2.0)) # enlarge PDF margin
+mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance-svm")
 
 # Cross validation
 cl <- makeCluster(detectCores())
@@ -102,6 +102,8 @@ mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt
 
 txt=paste(levels(dataset$shot_result)[1],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=1),2))
 mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-svm-made")
+
+
 
 # Decision tree
 cl <- makeCluster(detectCores())
