@@ -18,7 +18,7 @@
 \end{table}
 
 
-Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_gen}.
+Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_svm}.
 
 \begin{table}
 
@@ -36,7 +36,7 @@ Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matri
   & total & P & N &
 \end{tabular}
  \caption{Confusion Matrix}
- \label{confusion_matrix_gen}
+ \label{confusion_matrix_svm}
 \end{table}
 
 \par
@@ -72,6 +72,42 @@ Il risultato però è stato un albero con un solo split:
 
 Un’analisi delle metriche ci mostra il perchè di un albero così corto:
 
+\begin{table}[h!]
+\centering
+  \begin{tabular}{l l} 
+  Accuracy complessiva & 61.06\\
+  Precision per la classe \textit{made} & 62.12\\
+  Precision per la classe \textit{missed} & 60.68\\
+  Recall per la classe \textit{made} & 35.71\\
+  Recall per la classe \textit{missed} & 82.01\\
+  F-measure per la classe \textit{made} & 45.35\\
+  F-measure per la classe \textit{missed} & 69.75\\
+    \end{tabular}
+    \caption{Metriche risultate dell'esecuzione della cross validation su Decision Tree}
+\end{table}
+
+Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_dt}.
+
+\begin{table}
+
+\centering
+\noindent
+\renewcommand\arraystretch{1.5}
+\setlength\tabcolsep{0pt}
+\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
+\centering
+  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
+    & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
+  & & \bfseries p & \bfseries n & \bfseries total \\
+  & p$'$ & \MyBox{20 639} & \MyBox{37 162} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{12 587} & \MyBox{57 357} & N$'$ \\
+  & total & P & N &
+\end{tabular}
+ \caption{Confusion Matrix}
+ \label{confusion_matrix_dt}
+\end{table}
+
+
 Variables actually used in tree construction:
 [1] shot\_dist
 Variables importance:
@@ -80,11 +116,7 @@ shot\_clock 8
 touch\_time 8
 close\_def\_distance 7
 percentage\_prev\_games 1
-Accuracy: 60.9783333
-Precision1: 62.1907435
-Precision2: 60.5626553
-Recall1: 44.8677797
-Recall2: 69.8025357
+
 
 L’importance di shot\_dist è nettamente più alta di qualsiasi altro attributo.
 Questi valori dimostrano che il decision tree non è adeguato per il nostro problema in quanto non coinvolge attributi che per noi sono influenti e probabilmente generalizzerà male con istanze nuove.
