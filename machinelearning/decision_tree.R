@@ -54,7 +54,7 @@ trainset= allset$train
 testset= allset$test
 
 rp <- rpart(shot_result~., data = dataset, method="class") #for tests only: cp = 0.001
-fancyRpartPlot(rp)
+fancyRpartPlot(rp, sub="      ")
 printcp(rp)
 
 plotcp(rp) # visualize cross-validation results
