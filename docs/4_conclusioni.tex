@@ -9,7 +9,7 @@ Questa metrica era la più avanzata nell'era precedente al \textit{visual tracki
 L'idea è quella di utilizzare una metrica basata su QSQ (Quantified Shot Quality) (linkare paper): essa misura quanto bene un giocatore tira in relazione alla difficoltà del tiro stesso e, a differenza di EFG, non si limita ad una statistica pura.
 Ogni giocatore e tiro corrispondente potrebbe avere quindi come attributo un valore che rappresenta la difficoltà del tiro tenendo in considerazioni i diversi fattori sopra elencati.
 
-Dall'analisi effettuata è un dato di fatto che il modello attuale non faccia discriminazioni profonde: sia con SVM che con DT l'importance è sbilanciata in favore dell'attributo \texttt{shot_dist}. 
+Dall'analisi effettuata è un dato di fatto che il modello attuale non faccia discriminazioni profonde: sia con SVM che con DT l'importance è sbilanciata in favore dell'attributo \texttt{shot\_dist}. 
 Questa interpretazione dei dati è però limitata in quanto non sempre essere vicini al canestro è sinonimo di efficacia: ad esempio può esserci una situazione in cui il difensore copre bene la zona e l'attaccante è sbilanciato. Attualmente il nostro modello non è in grado di riconoscere queste situazioni. Per lo stesso motivo, essere lontani dal canestro non è sinonimo di fallimento: ad esempio può esserci una situazione che rende agevole il canestro.
 In questo senso l'attributo \texttt{closest\_def\_dist} aiuta il modello e infatti è secondo per contributo informativo.
 
