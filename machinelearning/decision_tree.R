@@ -78,7 +78,12 @@ importance_f
 
 ggsave(file="DT_importance.pdf", plot=importance_f, width=10)
 
+model=fit(shot_result~.,trainset,model="rpart", task="prob")
+print(model@time)
+
 M=crossvaldata(shot_result~.,dataset,fit,predict,ngroup=10,model="rpart",task="class",
                control = rpart::rpart.control(cp=0.01))
 C=mmetric(dataset$shot_result,M$cv.fit,metric="ALL")
+conf = mmetric(dataset$shot_result,M$cv.fit,metric="CONF")
 print(C)
+print(conf)
