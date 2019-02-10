@@ -6,20 +6,21 @@ Il comando \textit{mmetric} ci permette di ottenere metriche e stime di performa
 metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
 \end{minted}
 
+
 %TODO: aggiungere valori
 \begin{table}[H]
 \centering
   \begin{tabular}{l l} 
-  Accuracy complessiva & xx\\
-  Precision per la classe \textit{made} & xx\\
-  Precision per la classe \textit{missed} & xx\\
-  Recall per la classe \textit{made} & xx\\
-  Recall per la classe \textit{missed} & xx\\
-  F-measure per la classe \textit{made} & xx\\
-  F-measure per la classe \textit{missed} & xx\\
-  Area Under Curve complessiva & xx\\
+  Accuracy complessiva & 61.16\\
+  Precision per la classe \textit{made} & 61.32\\
+  Precision per la classe \textit{missed} & 61.09\\
+  Recall per la classe \textit{made} & 38.49\\
+  Recall per la classe \textit{missed} & 79.90\\
+  F-measure per la classe \textit{made} & 47.29\\
+  F-measure per la classe \textit{missed} & 69.24\\
+  Area Under Curve complessiva & 0.62\\
     \end{tabular}
-    \caption{Metriche del modello SVM}
+    \caption{Metriche risultate dell'esecuzione della cross validation su SVM}
 \end{table}
 
 \begin{table}[H]
@@ -34,14 +35,13 @@ metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
   \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
     & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
   & & \bfseries p & \bfseries n & \bfseries total \\
-  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
-  & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
+  & p$'$ & \MyBox{4 357}{} & \MyBox{6 962}{} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{2 749}{} & \MyBox{10 932}{} & N$'$ \\
   & total & P & N &
 \end{tabular}
  \caption{Confusion Matrix di SVM}
- \label{confusion_matrix_svm}
+ \label{confusion_matrix_svm_cv}
 \end{table}
-
 
 Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
 
@@ -57,15 +57,12 @@ Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione
 
 \par
 Sia eseguendo SVM sull'intero dataset, diviso opportunamente in training set (80\%) e trainset (il restante 20\%), sia eseguendolo con una 10-fold cross validation, il valore di accuracy complessivo tra le due esecuzioni non si discosta troppo. Ciò porta a concludere che il dataset è formato da istanze poco sofferenti di bias e difficilmente rischia di andare in overfitting.
-
 \begin{figure}[H]
 \centering
 \caption{ROC di SVM per made}
 \label{roc svm}
   \includegraphics[scale=0.55]{roc-svm-made-25k}
 \end{figure}
-
-
 \pagebreak
 \subsection{Alberi di Decisione}
 Per verificare come si comportassero altri modelli diversi dalla SVM, abbiamo dato in input il nostro dataset e abbiamo allenato un modello utilizzando gli alberi di decisione.
