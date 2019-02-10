@@ -48,14 +48,14 @@ L'esecuzione della Cross Validation non migliora molto questi risultati:
 \begin{table}[H]
 \centering
   \begin{tabular}{l l} 
-  Accuracy complessiva & xx\\
-  Precision per la classe \textit{made} & xx\\
-  Precision per la classe \textit{missed} & xx\\
-  Recall per la classe \textit{made} & xx\\
-  Recall per la classe \textit{missed} & xx\\
-  F-measure per la classe \textit{made} & xx\\
-  F-measure per la classe \textit{missed} & xx\\
-  Area Under Curve complessiva & xx\\
+  Accuracy complessiva & 61.16\\
+  Precision per la classe \textit{made} & 61.32\\
+  Precision per la classe \textit{missed} & 61.09\\
+  Recall per la classe \textit{made} & 38.49\\
+  Recall per la classe \textit{missed} & 79.90\\
+  F-measure per la classe \textit{made} & 47.29\\
+  F-measure per la classe \textit{missed} & 69.24\\
+  Area Under Curve complessiva & 0.62\\
     \end{tabular}
     \caption{Metriche risultate dell'esecuzione della cross validation su SVM}
 \end{table}
@@ -72,8 +72,8 @@ L'esecuzione della Cross Validation non migliora molto questi risultati:
   \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
     & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
   & & \bfseries p & \bfseries n & \bfseries total \\
-  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
-  & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
+  & p$'$ & \MyBox{4 357} & \MyBox{6 962} & P$'$ \\[2.4em]
+  & n$'$ & \MyBox{2 749} & \MyBox{10 932} & N$'$ \\
   & total & P & N &
 \end{tabular}
  \caption{Confusion Matrix di SVM dopo la cross validation}
@@ -109,7 +109,7 @@ Guardando le recall invece notiamo che per la classe \textit{missed} tendono ad 
 Le F-measure sono valori che permettono di confrontare direttamente le due classi. Precision e recall sono spesso diverse e quindi è complicato determinare quale classe abbia effettivamente meno errori: la F-measure, ottenuta computando la media armonica di queste due metriche, permette di quantificare le performance delle due classi in maniera comparabile. Nel nostro caso era deducibile che la f-measure di \textit{missed} fosse molto più alta di quella di \textit{made}: la disparità nelle recall influisce molto sul calcolo complessivo.
 
 Essendo un problema di apprendimento automatico binario, la Area Under Curve, intesa come AUROC (Area Under Receiver Operating Characteristic), è solo una. Tale metrica corrisponde all'area sottostante la ROC, ottenuta muovendo gradualmente la threshold della SVM e rappresentando sul grafo ogni volta i valori di TPR (\textit{True Positive Rate}) e FPR (\textit{False Positive Rate}).
-Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione tra True Positive e True Negative: nel nostro caso vale 0,64.
+Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione tra True Positive e True Negative: nel nostro caso vale 0.64.
 
 \par
 Sia eseguendo SVM sull'intero dataset, diviso opportunamente in training set (80\%) e trainset (il restante 20\%), sia eseguendolo con una 10-fold cross validation, il valore di accuracy complessivo tra le due esecuzioni non si discosta troppo. Ciò porta a concludere che il dataset è formato da istanze poco sofferenti di bias e difficilmente rischia di andare in overfitting.
