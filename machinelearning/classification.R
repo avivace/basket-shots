@@ -64,11 +64,7 @@ allset = split.data(dataset, p = 0.8, s = 1)
 trainset= allset$train
 testset= allset$test
 
-# Speed up (?)
-cl <- makeCluster(detectCores())
-registerDoParallel(cl)
 model=fit(shot_result~.,trainset,model="ksvm", task="prob", kernel="rbfdot", C=1)
-stopCluster(cl)
 print(model@time)
 
 # Importance
@@ -79,11 +75,9 @@ L=list(runs=1,sen=t(I$imp),sresponses=I$sresponses) # create a simple mining lis
 mgraph(L,graph="IMP",leg=names(dataset),col="gray",Grid=10,PDF="importance-svm")
 
 # Cross validation
-cl <- makeCluster(detectCores())
-registerDoParallel(cl)
+
 valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
                        task="prob", model="ksvm", kernel="rbfdot", C=1)
-stopCluster(cl)
 
 # Print results
 print(valdata$mpar)
@@ -102,19 +96,3 @@ mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt
 
 txt=paste(levels(dataset$shot_result)[1],"AUC:",round(mmetric(dataset$shot_result,valdata$cv,metric="AUC",TC=1),2))
 mgraph(dataset$shot_result,valdata$cv,graph="ROC",baseline=TRUE,Grid=10,main=txt,TC=1,PDF="roc-svm-made")
-
-
-
-# Decision tree
-cl <- makeCluster(detectCores())
-registerDoParallel(cl)
-valdata = crossvaldata(shot_result~., dataset, fit, predict, ngroup = 10, 
-                       task="prob", model="rpart")
-stopCluster(cl)
-metrics=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("ALL"))
-print(metrics)
-conf_matrix = mmetric(dataset$shot_result,valdata$cv.fit,metric=c("CONF"))
-print(conf_matrix)
-print(valdata$mpar)
-auc=mmetric(dataset$shot_result,valdata$cv.fit,metric=c("AUC"))
-print(auc)
