@@ -49,8 +49,37 @@ Guardando le recall invece notiamo che per la classe \textit{missed} tendono ad 
 
 Le F-measure sono valori che permettono di confrontare direttamente le due classi. Precision e recall sono spesso diverse e quindi è complicato determinare quale classe abbia effettivamente meno errori: la F-measure, ottenuta computando la media armonica di queste due metriche, permette di quantificare le performance delle due classi in maniera comparabile. Nel nostro caso era deducibile che la f-measure di “missed” fosse molto più alta di quella di “made”: la disparità nelle recall influisce molto sul calcolo complessivo.
 
+Essendo un problema di apprendimento automatico binario, la Area Under Curve, intesa come AUROC (Area Under Receiver Operating Characteristic), è solo una. Tale metrica corrisponde all’area sottostante la ROC, ottenuta muovendo gradualmente la threshold della SVM e rappresentando sul grafo ogni volta i valori di TPR (True Positive Rate) e FPR (False Positive Rate).
+Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione tra True Positive e True Negative: nel nostro caso vale 0,64.
+
 \par
 Sia eseguendo SVM sull'intero dataset, diviso opportunamente in training set (80\%) e trainset (il restante 20\%), sia eseguendolo con una 10-fold cross validation, il valore di accuracy complessivo tra le due esecuzioni non si discosta troppo. Ciò porta a concludere che il dataset è formato da istanze poco sofferenti di bias e difficilmente rischia di andare in overfitting.
 
 \par
 Non essendo completamente soddisfatti dal livello di accuracy ottenuto, abbiamo cercato lavori analoghi al nostro per confrontare e verificare la possibile presenza di errori nella realizzazione del modello. \cite{predictingNBAst} fa un percorso analogo al nostro partendo dallo stesso datasets \textit{Shot logs}, confrontando più algoritmi e raggiungendo un'accuratezza  68\% utilizzando \textit{XGBoost}, un'implementazione di \textit{Boosting}. È un approccio che coinvolge diversi classificatori \textit{weak learners} e infine, ne combina le predizioni, pesate differentemente, con un ulteriore algoritmo di apprendimento artificiale (\textit{strong learner}).
+
+\subsection{Alberi di Decisione}
+Per verificare come si comportassero altri modelli diversi dalla SVM, abbiamo dato in input il nostro dataset e abbiamo allenato un modello sfruttando la tecnica del Decision Tree.
+Innanzitutto è stata eseguita un’euristica per individuare il valore migliore di CP, ossia quello con “xerror” minimo. Questo parametro indica di quanto debba migliorare il relative error complessivo per poter eseguire uno split nel nodo dell'albero.
+Il risultato però è stato un albero con un solo split:
+IMMAGINE ALBERO
+
+Un’analisi delle metriche ci mostra il perchè di un albero così corto:
+
+Variables actually used in tree construction:
+[1] shot\_dist
+Variables importance:
+shot\_dist 77
+shot\_clock 8
+touch\_time 8
+close\_def\_distance 7
+percentage\_prev\_games 1
+Accuracy: 60.9783333
+Precision1: 62.1907435
+Precision2: 60.5626553
+Recall1: 44.8677797
+Recall2: 69.8025357
+
+L’importance di shot\_dist è nettamente più alta di qualsiasi altro attributo.
+Questi valori dimostrano che il decision tree non è adeguato per il nostro problema in quanto non coinvolge attributi che per noi sono influenti e probabilmente generalizzerà male con istanze nuove.
+Inoltre questo albero di decisione ottiene delle metriche peggiori della nostra SVM.

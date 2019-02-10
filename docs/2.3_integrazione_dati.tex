@@ -110,7 +110,7 @@ La Completabilità è definita dall'area segnata come \textit{Cb}. Il confronto 
 
 \par
 
-Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, indipendenemente dalla stagione a cui si riferiscono, supponiamo che:
+Per dare un'idea di che completabilità esibiscono i dataset che consideriamo supponiamo che:
 
 
 \begin{itemize}
@@ -128,7 +128,12 @@ Per dare un'idea di che completabilità esibiscono i dataset che consideriamo, i
 		\item $p$ numero di stagioni precedenti a quella che si vuole considerare che si suppongono rilevanti e parte del dataset.
 	\end{itemize}
 
-Considerando tutti gli istanti $t$ in cui siano giocate delle partite, ottenute da \cite{nba_schedule} e utilizzando $y = 2019, c = 3$ (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completezza evolve secondo la \autoref{completabilitypic} attestandosi su un valore medio.
+Considerando tutti gli istanti $t$ in cui siano giocate delle partite, ottenute da \cite{nba_schedule} e utilizzando $y = 2019, c = 3$ (considerando quindi i dati delle stagioni 2019, 2018, 2017, 2016, con 2019 stagione oggetto del dataset), la completabilità evolve secondo la \autoref{completabilitypic} attestandosi su un valore medio.
+
+Scegliendo una finestra temporale più estesa la completabilità mostra un andamento periodico.
+
+Infatti da inizio stagione (Ottobre) fino alla sua fine (Maggio) continuano ad essere forniti dati nuovi dopo ogni singola partita; nel periodo da Maggio a Ottobre invece non ci sono partite e nessun nuovo dato viene generato; infine ad Ottobre inizia un nuovo campionato, rendendo obsoleti i dati più vecchi della finestra mentre si abbassa la completezza.
+
 
 % TODO: Aggiungere C(t) sull'asse Y, sostituire Date con Time nell'asse X.
 \begin{figure}
