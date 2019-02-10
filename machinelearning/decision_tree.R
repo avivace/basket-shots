@@ -1,6 +1,7 @@
 library(rpart)
 library(rattle)
 library(rminer)
+library(ggplot2)
 
 set.seed(123)
 setwd('~/github/basket-shots/datasets/')
@@ -58,6 +59,24 @@ printcp(rp)
 
 plotcp(rp) # visualize cross-validation results
 summary(rp) # detailed summary of splits
+
+rpi <- rp$variable.importance
+features <- as.vector(names(rp$variable.importance))
+importance <- as.vector(unname(rp$variable.importance))
+imp_feats <- data.frame(rp$variable.importance)
+features
+importance
+length(features)
+length(importance)
+imp_feats
+
+importance_f = ggplot(imp_feats, aes(x=features, y=importance)) + 
+  geom_bar(stat='identity') + theme(text = element_text(size=15)) +
+  coord_flip()
+
+importance_f
+
+ggsave(file="DT_importance.pdf", plot=importance_f, width=10)
 
 M=crossvaldata(shot_result~.,dataset,fit,predict,ngroup=10,model="rpart",task="class",
                control = rpart::rpart.control(cp=0.01))
