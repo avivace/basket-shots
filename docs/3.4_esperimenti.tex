@@ -1,5 +1,7 @@
 \section{Esperimenti e analisi dei risultati}
 
+Dopo una semplice esecuzione di una SVM abbiamo ottenuto le seguenti metriche:
+
 \begin{table}[h!]
 \centering
   \begin{tabular}{l l} 
@@ -10,13 +12,10 @@
   Recall per la classe \textit{missed} & xx\\
   F-measure per la classe \textit{made} & xx\\
   F-measure per la classe \textit{missed} & xx\\
-  Area Under Curve per la classe \textit{made} & xx\\
-  Area Under Curve per la classe \textit{missed} & xx\\
   Area Under Curve complessiva & xx\\
     \end{tabular}
     \caption{Metriche risultate dell'esecuzione della cross validation su SVM}
 \end{table}
-
 
 Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_svm}.
 
@@ -40,14 +39,14 @@ Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matri
 \end{table}
 
 \par
-Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: come già anticipato nella sezione 3.1, le circostanze che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al random guessing dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
+Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: come già anticipato nella sezione 3.1, i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
 
 \par
-Dalle metriche ottenute possiamo fare alcune valutazioni: dai valori di precision molto vicini tra loro deduciamo che il numero di falsi positivi per entrambe le classi è simile ed inferiore al 60\%.
-% TO DO: false positive per made e false negative per missed?
-Guardando le recall invece notiamo che per la classe \textit{missed} tendono ad esserci pochi falsi negativi, mentre la vera criticità è il numero molto alto di falsi negativi per \textit{made}. In altre parole, un tiro legittimo tende ad essere considerato un fallimento.
+% to do: verificare correttezza
+Considerando la classe \textit{made} quella positiva e la classe \textit{missed} quella negativa, dalle metriche ottenute possiamo fare alcune valutazioni: per entrambe le classi il valore di precision è simile ed è sul 60\%, da cui deduciamo una proporzionalità di falsi positivi e falsi negativi.
+Guardando le recall invece notiamo che per la classe \textit{missed} tendono ad esserci pochi falsi negativi, mentre la vera criticità è il numero eccessivo di falsi positivi per \textit{made}. In altre parole, un tiro legittimo tende ad essere considerato un fallimento.
 
-Le F-measure sono valori che permettono di confrontare direttamente le due classi. Precision e recall sono spesso diverse e quindi è complicato determinare quale classe abbia effettivamente meno errori: la F-measure, ottenuta computando la media armonica di queste due metriche, permette di quantificare le performance delle due classi in maniera comparabile. Nel nostro caso era deducibile che la f-measure di “missed” fosse molto più alta di quella di “made”: la disparità nelle recall influisce molto sul calcolo complessivo.
+Le F-measure sono valori che permettono di confrontare direttamente le due classi. Precision e recall sono spesso diverse e quindi è complicato determinare quale classe abbia effettivamente meno errori: la F-measure, ottenuta computando la media armonica di queste due metriche, permette di quantificare le performance delle due classi in maniera comparabile. Nel nostro caso era deducibile che la f-measure di \textit{missed} fosse molto più alta di quella di \textit{made}: la disparità nelle recall influisce molto sul calcolo complessivo.
 
 Essendo un problema di apprendimento automatico binario, la Area Under Curve, intesa come AUROC (Area Under Receiver Operating Characteristic), è solo una. Tale metrica corrisponde all’area sottostante la ROC, ottenuta muovendo gradualmente la threshold della SVM e rappresentando sul grafo ogni volta i valori di TPR (True Positive Rate) e FPR (False Positive Rate).
 Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione tra True Positive e True Negative: nel nostro caso vale 0,64.
@@ -70,7 +69,8 @@ Il risultato però è stato un albero con un solo split:
 \end{figure}
 
 
-Un’analisi delle metriche ci mostra il perchè di un albero così corto:
+Un’analisi delle metriche e del contributo informativo delle feature considerate ci mostra il perchè di un albero così corto:
+
 
 \begin{table}[h!]
 \centering
@@ -87,7 +87,6 @@ Un’analisi delle metriche ci mostra il perchè di un albero così corto:
 \end{table}
 
 Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matrix_dt}.
-
 
 \begin{table}
 
@@ -107,7 +106,6 @@ Queste metriche sono state calcolate direttamente dalla \autoref{confusion_matri
  \caption{Confusion Matrix di DT}
  \label{confusion_matrix_dt}
 \end{table}
-
 
 
 \begin{table}[h!]
