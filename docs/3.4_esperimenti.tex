@@ -42,63 +42,6 @@ metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
  \label{confusion_matrix_svm}
 \end{table}
 
-L'esecuzione della Cross Validation non migliora molto questi risultati:
-
-%TODO: aggiungere valori
-\begin{table}[H]
-\centering
-  \begin{tabular}{l l} 
-  Accuracy complessiva & xx\\
-  Precision per la classe \textit{made} & xx\\
-  Precision per la classe \textit{missed} & xx\\
-  Recall per la classe \textit{made} & xx\\
-  Recall per la classe \textit{missed} & xx\\
-  F-measure per la classe \textit{made} & xx\\
-  F-measure per la classe \textit{missed} & xx\\
-  Area Under Curve complessiva & xx\\
-    \end{tabular}
-    \caption{Metriche risultate dell'esecuzione della cross validation su SVM}
-\end{table}
-
-\begin{table}[H]
-
-%TODO: aggiungere valori
-\centering
-\noindent
-\renewcommand\arraystretch{1.5}
-\setlength\tabcolsep{0pt}
-\begin{tabular}{c >{\bfseries}r @{\hspace{0.7em}}c @{\hspace{0.4em}}c @{\hspace{0.7em}}l}
-\centering
-  \multirow{10}{*}{\rotatebox{90}{\parbox{1.1cm}{\bfseries\centering Actual value}}} & 
-    & \multicolumn{2}{c}{\bfseries Prediction outcome} & \\
-  & & \bfseries p & \bfseries n & \bfseries total \\
-  & p$'$ & \MyBox{True}{Positive} & \MyBox{False}{Negative} & P$'$ \\[2.4em]
-  & n$'$ & \MyBox{False}{Positive} & \MyBox{True}{Negative} & N$'$ \\
-  & total & P & N &
-\end{tabular}
- \caption{Confusion Matrix di SVM dopo la cross validation}
- \label{confusion_matrix_svm_cv}
-\end{table}
-
-\begin{figure}[H]
-  % QUA CI VA ROC PRIMA DI CV
-  \centering
-  \begin{subfigure}{.5\textwidth}
-  \centering
-  \caption{Prima}
-  \label{roc-svm-missed-25k}
-  \includegraphics[width=.8\linewidth]{roc-svm-missed-25k}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \caption{Dopo}
-  \label{roc-svm-made-25k}
-  \includegraphics[width=.8\linewidth]{roc-svm-made-25k}
-\end{subfigure}%
-  \caption{ROC su SVM}
-\end{figure}
-
-
 Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
 
 \par
@@ -113,6 +56,14 @@ Più grande (vicino a 1) è il valore della AUROC, più è grande la distinzione
 
 \par
 Sia eseguendo SVM sull'intero dataset, diviso opportunamente in training set (80\%) e trainset (il restante 20\%), sia eseguendolo con una 10-fold cross validation, il valore di accuracy complessivo tra le due esecuzioni non si discosta troppo. Ciò porta a concludere che il dataset è formato da istanze poco sofferenti di bias e difficilmente rischia di andare in overfitting.
+
+\begin{figure}[H]
+\centering
+\caption{ROC di SVM per made}
+\label{roc svm}
+  \includegraphics[scale=0.55]{roc-svm-made-25k}
+\end{figure}
+
 
 \pagebreak
 \subsection{Alberi di Decisione}
