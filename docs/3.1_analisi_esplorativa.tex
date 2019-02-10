@@ -1,7 +1,7 @@
 %INTRO
 La scelta del modello di machine learning da utilizzare è in gran parte determinata dalle caratteristiche dei dati a disposizione.
 
-Iniziamo dunque con un analisi del nostro dataset per individuare le caratteristiche che descrivono e in che modo i valori che assumono sono distribuiti nelle nostre istanze.
+Iniziamo dunque con un analisi del nostro dataset per individuare le caratteristiche che descrivono gli attributi e in che modo i valori che assumono sono distribuiti nelle nostre istanze.
 
 \section{Analisi esplorativa}
 
@@ -11,7 +11,7 @@ Il dataset integrato risultante possiede per ciascuno dei 128 000 tiri informazi
 In Shot logs sono stati esclusi alcuni attributi (descritti nella \autoref{tabella_shot_logs}) riguardanti la partita come \texttt{W}, \texttt{Final margin} e \texttt{Matchup}, ritenuti non rilevanti per le sorti di un tiro a canestro.
 Anche \texttt{Period} e \texttt{Game clock} sono stati ritenuti superflui, in quanto è già presente l'attributo \texttt{Shot number}, così come non significativo è stato valutato l'attributo \texttt{Pts type} (deducibile dall'attributo \texttt{Shot distance}). 
 \par
-Analogamente, in Seasons stats sono stati esclusi decine di indici statistici non determinanti, oltre agli attributi (descritti in \autoref{tabella_seasons_stats}) come \texttt{Games} e \texttt{MP}.
+Analogamente, in Seasons stats sono state escluse decine di indici statistici non determinanti, oltre agli attributi (descritti in \autoref{tabella_seasons_stats}) come \texttt{Games} e \texttt{MP}.
 
 \par
 Nell'analisi di questi dati, è emerso lampante che avere a disposizione altri fattori più circostanziali al tiro, che sono reperibili grazie al \textit{visual tracking}, come la parabola del tiro stesso, la velocità dell'attaccante e del difensore, le coordinate sul rettangolo di gioco dei due giocatori e così via, avrebbe aiutato a creare modelli più approfonditi in modo da fornire predizioni più fedeli.
