@@ -2,7 +2,7 @@
 
 ### _Predicting Basket Shots outcomes using SVM_
 
-By [Matteo Coppola](), [Luca Palazzi](), [Antonio Vivace](https://github.com/avivace).
+By [Matteo Coppola](https://github.com/matteocoppola), [Luca Palazzi](https://github.com/lucapalazzi), [Antonio Vivace](https://github.com/avivace).
 
 Data Technology and Machine Learning (CS MSc) exam final project. Academic year 2018/2019.
 
