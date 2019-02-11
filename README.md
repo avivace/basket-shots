@@ -6,9 +6,9 @@ By [Matteo Coppola](), [Luca Palazzi](), [Antonio Vivace](https://github.com/avi
 
 Data Technology and Machine Learning (CS MSc) exam final project. Academic year 2018/2019.
 
-[Documentation]()
+[Documentation](https://github.com/avivace/basket-shots/raw/master/docs/index.pdf)
 
-[Slides]()
+[Slides](https://github.com/avivace/basket-shots/raw/master/Presentazione.pdf)
 
 <br>
 
