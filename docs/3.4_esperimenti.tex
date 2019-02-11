@@ -43,12 +43,12 @@ metrics=mmetric(testset$shot_result,prediction,metric=c("ALL"))
  \label{confusion_matrix_svm_cv}
 \end{table}
 
-Il risultato, intuitivamente un po' basso, è in realtà in linea con le aspettative: i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque  superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
+Il risultato (su un sample di 25 000) intuitivamente un po' basso è in realtà in linea con le aspettative: i fattori che influenzano un tiro a canestro sono molteplici, mentre le informazioni in nostro possesso sono limitate. Il fatto che sia comunque superiore al \textit{random guessing} dimostra che esistono dei fattori nel dataset che tendono effettivamente ad influenzare il successo o il fallimento del tiro.
 
 \par
 % to do: verificare correttezza
-Considerando la classe \textit{made} quella positiva e la classe \textit{missed} quella negativa, dalle metriche ottenute possiamo fare alcune valutazioni: per entrambe le classi il valore di precision è simile ed è sul 60\%, da cui deduciamo una proporzionalità di falsi positivi e falsi negativi.
-Guardando le recall invece notiamo che per la classe \textit{missed} tendono ad esserci pochi falsi negativi, mentre la vera criticità è il numero eccessivo di falsi positivi per \textit{made}. In altre parole, un tiro legittimo tende ad essere considerato un fallimento.
+Considerando la classe \textit{made} quella positiva e la classe \textit{missed} quella negativa, dalle metriche ottenute possiamo fare alcune valutazioni: per entrambe le classi il valore di precision è simile ed è sul 60\%, da cui deduciamo una proporzionalità nelle classi di falsi positivi e falsi negativi rispetto ai valori target.
+Guardando le recall, che invece considera i valori da predire, notiamo che per la classe \textit{missed} tendono ad esserci pochi falsi negativi, mentre la vera criticità è il numero eccessivo di falsi positivi per \textit{made}. In altre parole, un tiro legittimo tende ad essere predetto come un fallimento.
 
 Le F-measure sono valori che permettono di confrontare direttamente le due classi. Precision e recall sono spesso diverse e quindi è complicato determinare quale classe abbia effettivamente meno errori: la F-measure, ottenuta computando la media armonica di queste due metriche, permette di quantificare le performance delle due classi in maniera comparabile. Nel nostro caso era deducibile che la f-measure di \textit{missed} fosse molto più alta di quella di \textit{made}: la disparità nelle recall influisce molto sul calcolo complessivo.
 
@@ -104,8 +104,7 @@ percentage\_prev\_games &1\\
 \end{table}
 
 L'importance di \textit{shot\_dist} è nettamente più alta di qualsiasi altro attributo.
-Questi valori dimostrano che il decision tree non è adeguato per il nostro problema in quanto non coinvolge attributi che per noi sono influenti e probabilmente generalizzerà male con istanze nuove.
-Inoltre questo albero di decisione ottiene delle metriche peggiori della nostra SVM.
+Questi valori dimostrano che il decision tree non è adeguato per il nostro problema in quanto non coinvolge attributi che per noi sono influenti e probabilmente generalizzerà male con istanze nuove, nonostante siano state ottenute metriche simili a SVM.
 
 \begin{table}[H]
 
