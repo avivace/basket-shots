@@ -19,13 +19,13 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 		\hline
 		Location & factor(home, away) & In casa o fuori casa \\
 		\hline
-		W & factor(win, loss) & Partita vinta o persa dalla squadra del giocatore che ha fatto il tiro \\ 
+		W & factor(win, loss) & Partita vinta o persa dalla squadra dell'attaccante \\ 
 		\hline
 		Final margin & int & Scarto tra punteggi delle due squadre a fine partita \\ 
 		\hline
 		Shot number & int & Numero del tiro da inizio partita \\ 
 		\hline
-		Period & factor(1..7) & Periodo della partita. Sono 4 periodi nel basket, più altri 3 supplementari in caso di pareggio tra le due squadre ai periodi 4, 5 e 6. \\ 
+		Period & factor(1..7) & Periodo della partita. Sono 4 periodi nel basket, più altri 3 supplementari in caso di pareggio tra le due squadre al termine dei periodi 4, 5 e 6. \\ 
 		\hline
 		Game clock & Date/Time & Minuto e secondo della partita in cui si è effettuato il tiro \\ 
 		\hline
@@ -33,7 +33,7 @@ Dopo aver scelto il dominio applicativo di riferimento e aver deciso gli obietti
 		\hline
 		Dribbles & int & Numero di dribbling effettuati dall'attaccante prima del tiro \\ 
 		\hline
-		Touch time & float & Secondo del possesso palla in cui il giocatore ha tirato \\ 
+		Touch time & float & Secondo del possesso palla in cui l'attaccante ha tirato \\ 
 		\hline
 		Shot dist & float & Distanza dal canestro al momento del tiro \\ 
 		\hline
@@ -155,7 +155,7 @@ Molte ennuple hanno valori mancanti soprattutto in alcuni attributi specifici, m
 	\end{longtable}
 \end{center}
 
-Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24692. Si tratta di una chiave non molto utile per il tipo di dataset: le statistiche dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l'integrazione tra i due dataset e, se avessimo voluto fare un'integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
+Infine la chiave principale per le istanze è un ID incrementale che va da 0 a 24 692. Si tratta di una chiave non molto utile per il tipo di dataset: le statistiche dei giocatori andrebbero indicizzati con un ID univoco che si riferisce al singolo atleta. In questo modo sarebbe stato più facile eseguire l'integrazione tra i due dataset e, se avessimo voluto fare un'integrazione più ampia tra dataset di leghe diverse, sarebbe stato più facile rintracciare le statistiche dello stesso giocatore in campionati diversi.
 
 \subsubsection{Shot logs}
 
