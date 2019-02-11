@@ -1,17 +1,17 @@
-L'intero progetto, dalla scelta dei dataset all'analisi dei risultati dell'apprendimento automatico, si è rivelato essere molto ampio, coinvolgendo non solo i temi più comuni riguardo la Data Technology e il Machine Learning ma anche finezze statistiche, matematiche e informatiche. Ciò è sicuramente una dimostrazione di quante aree di studio possano essere coinvolte in questi due settori fortemente in crescita, sia nell'ambito della ricerca scientifica che nelle applicazioni di business.
+L'intero progetto, dalla scelta dei dataset all'analisi dei risultati dell'apprendimento automatico, si è rivelato essere molto ampio, coinvolgendo non solo i temi più comuni riguardo la Data Technology e Machine Learning ma anche finezze statistiche, matematiche e informatiche. Ciò è sicuramente una dimostrazione di quante aree di studio possano essere coinvolte in questi due settori fortemente in crescita, sia nell'ambito della ricerca scientifica che nelle applicazioni commerciali.
+I risultati del nostro modello prevedono ampio margine di miglioramento, a partire dalla qualità dei dataset di partenza.
 \par
-I risultati del nostro modello possiedono ancora ampio margine di miglioramento: il limite principale tuttavia non sono i limiti delle tecniche di apprendimento automatico e neppure la qualità delle istanze dei dataset coinvolti; è bensì la mancanza di alcuni attributi che conferirebbero al computatore una migliore rappresentazione della realtà di un tiro a canestro nell'NBA.
+È difficile determinare se la SVM sia la tecnica ideale per allenare il nostro dataset. Non abbiamo individuato un fattore discriminante che porti a preferirla rispetto ad altri modelli come le reti neurali oppure gli alberi di decisione.
 \par
-Nonostante gli aspetti positivi, è difficile determinare se la SVM sia la tecnica ideale per allenare il nostro dataset. Non abbiamo individuato un fattore discriminante che porti a preferirla rispetto ad altri modelli come le reti neurali oppure gli alberi di decisione.
+Riteniamo tuttavia, che il limite principale sia la mancanza di alcuni attributi che conferirebbero al computatore una migliore rappresentazione della realtà del fenomeno che abbiamo analizzato.
+
 
 \section{Metriche mancanti}
 \label{metrichemancanti}
-% to do aggiungere paper
 A posteriori, l'insieme degli attributi usati per il modello è sembrato non sufficiente per garantire un livello di predizione affidabile.
-Alcuni sviluppi futuri riguardano la considerazione di un più ampio insieme di attributi a discapito di altri.
-Attualmente per stimare l'effettivo stato fisico e mentale del giocatore durante la stagione utilizziamo l'attributo percentage\_prev\_games. Supponendo di conoscere e poter utilizzare le statistiche delle stagioni precedenti, un indice ampiamente utilizzato per valutare il tiro di un giocatore è EFG (Effective Field Goal): consiste in una semplice statistica che classifica la bravura del giocatore separando i tiri secondo il loro valore potenziale (tiri da 2 e tiri da 3).
+Attualmente, per stimare l'effettivo stato fisico e mentale del giocatore durante la stagione utilizziamo l'attributo percentage\_prev\_games. Supponendo di conoscere e poter utilizzare le statistiche delle stagioni precedenti, un indice ampiamente utilizzato per valutare il tiro di un giocatore è EFG (Effective Field Goal): consiste in una semplice statistica che classifica la bravura del giocatore separando i tiri secondo il loro valore potenziale (tiri da 2 e tiri da 3).
 Questa metrica era la più avanzata nell'era precedente al \textit{visual tracking}: come già introdotto nella \autoref{analisi_esplorativa}, ad oggi sempre più fattori vengono analizzati per giudicare le prestazioni degli atleti, in qualsiasi ambito.
-L'idea è quella di utilizzare una metrica basata su QSQ (Quantified Shot Quality) \cite{chang2014quantifying}: essa misura quanto bene un giocatore tira in relazione alla difficoltà del tiro stesso e, a differenza di EFG, non si limita ad una statistica pura.
+Un'altra possibilità è utilizzare una metrica basata su QSQ (Quantified Shot Quality) \cite{chang2014quantifying}: essa misura quanto bene un giocatore tira in relazione alla difficoltà del tiro stesso e, a differenza di EFG, non si limita ad una statistica pura.
 Ogni giocatore e tiro corrispondente potrebbe avere quindi come attributo un valore che rappresenta la difficoltà del tiro tenendo in considerazioni i diversi fattori sopra elencati.
 
 Dall'analisi effettuata è un dato di fatto che il modello attuale non faccia discriminazioni profonde: sia con SVM che con Decision Tree l'importance è sbilanciata in favore dell'attributo \texttt{shot\_dist}. 
@@ -24,9 +24,10 @@ In questo senso l'attributo \texttt{closest\_def\_dist} aiuta il modello e infat
 \par
 Non essendo completamente soddisfatti dal livello di accuracy ottenuto, abbiamo cercato lavori analoghi al nostro per confrontare e verificare la possibile presenza di errori nella realizzazione del modello. \cite{predictingNBAst} fa un percorso analogo al nostro partendo dallo stesso datasets \textit{Shot logs}, confrontando più algoritmi e raggiungendo un'accuratezza  68\% utilizzando \textit{XGBoost}, un'implementazione di \textit{Boosting}. È un approccio che coinvolge diversi classificatori \textit{weak learners} e infine, ne combina le predizioni, pesate differentemente, con un ulteriore algoritmo di apprendimento artificiale (\textit{strong learner}).
 
-Le metriche mostrano che la nostra SVM predice l'esito del tiro in maniera poco più che sufficiente ed è importante notare che predice meglio un tiro \texit{missed} da uno \textit{made}, come dimostrato dai valori delle due recall.
+Le metriche mostrano che la nostra SVM predice l'esito del tiro in maniera poco più che sufficiente ed è importante notare che predice meglio un tiro \textit{missed} da uno \textit{made}, come dimostrato dai valori delle due recall.
 Come mostrato dai nostri colleghi di Stanford, tecniche di Machine Learning più avanzate come il \textit{Boosting} possono massimizzare le metriche, sebbene rimangano ad una distanza minima dai nostri risultati.
 
 \section{Sviluppi futuri}
-Per ottenere predizioni sicure per il problema che abbiamo analizzato sarebbe necessario teoricamente implementare sensori come misuratori di inerzia, di rotazione e accelerometri sui giocatori e/o sulla palla da basket. Bisognerebbe anche registrare fattori come l'umidità dell'aria che potrebbero influenzare soprattutto i tiri più lunghi. Verrebbe quindi aggiunta una mole di dati continua da gestire con tecnologie IoT adeguate. Il basso livello di fattibilità riguardo a queste ultime considerazioni - difficilmente i giocatori di NBA giocherebbero con sensori addosso - ci permette di intravedere una soglia di incertezza sull'esito dei tiri che, quantomeno nel prossimo futuro, nessuno potrà superare.
+Per ottenere predizioni ancora più accurate, implementare sensori come misuratori di inerzia, di rotazione e accelerometri sui giocatori e/o sulla palla da basket fornirebbe tutt'altro livello di dettaglio.
 
+Verrebbe quindi aggiunta una mole di dati continua da gestire con tecnologie IoT adeguate. Il basso livello di fattibilità riguardo a queste ultime considerazioni - difficilmente i giocatori di NBA giocherebbero con sensori addosso - ci permette di intravedere una soglia di incertezza sull'esito dei tiri che, quantomeno nel prossimo futuro, sarà arduo superare.
